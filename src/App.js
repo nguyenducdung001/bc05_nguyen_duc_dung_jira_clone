@@ -1,11 +1,30 @@
-import logo from "./logo.svg";
 import "./App.css";
+
+import Login from "./Pages/Login/Login";
+import Home from "./Pages/Home/Home";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import PageNotFound from "./Pages/PageNotFound/PageNotFound";
+import Project from "./Pages/Project/Project";
+import Layout from "./HOC/Layout/Layout";
 
 function App() {
   return (
-    <div className="App">
-      <h1 className="text-3xl font-bold underline">Hello world!</h1>
-    </div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route
+          path="/login"
+          element={
+            <Layout>
+              <Login />
+            </Layout>
+          }
+        />
+        <Route path="/project" element={<Project />} />
+
+        <Route path="*" element={<PageNotFound />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 

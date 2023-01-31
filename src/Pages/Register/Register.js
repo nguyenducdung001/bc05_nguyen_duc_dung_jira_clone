@@ -8,16 +8,16 @@ import {
 import { Button, Checkbox, Form, Input } from "antd";
 
 import { useDispatch } from "react-redux";
-import { userService } from "../../services/userService";
+
 import { userLocaService } from "../../services/localStorageService";
-import { useNavigate } from "react-router-dom";
+import { jiraServices } from "./../../services/jiraServices";
+
 export default function Register(props) {
-  let navigate = useNavigate();
   let dispatch = useDispatch();
   const onFinish = (values) => {
     console.log("Success:", values);
-    userService
-      .postDangKi(values)
+    jiraServices
+      .signUpJira(values)
       .then((res) => {
         // dispatch(res.data.content);
         console.log(res.data.content);
@@ -25,10 +25,7 @@ export default function Register(props) {
         // Lưu vào localStore
         userLocaService.set(res.data.content);
         // Chuyển hướng về trang chủ nhưng cần load trang :  window.location.href="/"
-        setTimeout(() => {
-          // Dùng navigate để không cần load lại trang
-          navigate("/login");
-        }, 1000);
+
         //
       })
       .catch((err) => {
@@ -39,7 +36,7 @@ export default function Register(props) {
     console.log("Failed:", errorInfo);
   };
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen">
+    <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100">
       <div className="sm:container p-5">
         <Form
           name="basic"
@@ -119,12 +116,9 @@ export default function Register(props) {
             }}
             className="text-center"
           >
-            <Button
-              className="bg-green-400 text-white hover:bg-white"
-              htmlType="submit"
-            >
+            <button className="btn btn-outline-secondary" htmlType="submit">
               Register
-            </Button>
+            </button>
           </Form.Item>
         </Form>
       </div>

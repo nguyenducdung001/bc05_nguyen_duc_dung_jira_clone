@@ -4,6 +4,7 @@ export const userLocaService = {
   set: (userData) => {
     let userJson = JSON.stringify(userData);
     localStorage.setItem(USER_LOGIN, userJson);
+    // localStorage.setItem(TOKEN, userJson.content.accessToken);
   },
   get: () => {
     let userJson = localStorage.getItem(USER_LOGIN);

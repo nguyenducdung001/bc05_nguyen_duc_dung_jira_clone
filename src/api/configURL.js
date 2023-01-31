@@ -8,7 +8,7 @@ export const TOKEN_CYBERSOFT =
 export const createConfig = () => {
   return {
     TokenCybersoft: TOKEN_CYBERSOFT,
-    Authorization: "bearer " + userLocaService.get()?.accessToken,
+    Authorization: "Bearer " + userLocaService.get()?.accessToken,
   };
 };
 

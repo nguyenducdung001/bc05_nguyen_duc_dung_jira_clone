@@ -1,6 +1,6 @@
-@tailwind base;
+/* @tailwind base;
 @tailwind components;
-@tailwind utilities;
+@tailwind utilities; */
 
 .jira {
   height: 100vh;
@@ -99,7 +99,7 @@
 
 .menu .account {
   display: flex;
-  padding: 5% 17%;
+  /* padding: 5% 17%; */
   margin-bottom: 5%;
 }
 
@@ -126,6 +126,9 @@
 .menu .account .account-info p:last-child {
   margin-top: 0px;
   font-weight: 300;
+}
+.menu .control i {
+  margin-right: 5%;
 }
 
 .menu .control {
@@ -161,6 +164,10 @@
   margin-bottom: 8%;
   margin-left: 7%;
   margin-right: 7%;
+}
+
+.menu .feature i {
+  margin-right: 5%;
 }
 
 .menu .feature div {

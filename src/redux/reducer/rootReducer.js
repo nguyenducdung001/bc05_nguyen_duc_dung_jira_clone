@@ -1,6 +1,9 @@
 import { combineReducers } from "redux";
-import cyberBugReducer from "./cyberBugReducer";
+import JiraReducer from "./JiraReducer";
+import { ProjectCategoryReducer } from "./ProjectCatagoryReducer";
+import { HistoryReducer } from "./HistoryReducer";
 
 export const rootReducer = combineReducers({
-  cyberBugReducer,
+  JiraReducer,
+  ProjectCategoryReducer,
 });

@@ -1,21 +1,21 @@
 import React, { Fragment } from "react";
 import { Route } from "react-router-dom";
-import Header from "../../Pages/Header/Header";
 
-export const UserLoginTemplates = (props) => {
-  let { Component, ...restParam } = props;
+export default function HomeTemplate(props) {
+  const { Component, ...restProps } = props;
 
   return (
     <Route
-      {...restParam}
+      {...restProps}
       render={(propsRoute) => {
+        //props.location, props.history, props.match
+
         return (
-          <>
-            <Header />
+          <Fragment>
             <Component {...propsRoute} />
-          </>
+          </Fragment>
         );
       }}
     />
   );
-};
+}

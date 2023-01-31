@@ -3,14 +3,16 @@ import { UserOutlined, LockOutlined, MailOutlined } from "@ant-design/icons";
 import { Button, Checkbox, Form, Input } from "antd";
 
 import { useDispatch, useSelector } from "react-redux";
-import { userService } from "../../services/userService";
+
 import { userLocaService } from "../../services/localStorageService";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
+
+import { jiraServices } from "./../../services/jiraServices";
 
 export default function Login(props) {
-  let navigate = useNavigate();
+  // let navigate = useNavigate();
   let user = useSelector((state) => {
-    return state.cyberBugReducer.userInfor;
+    return state.JiraReducer.userInfor;
   });
   const getUserInfor = () => {
     console.log(user);
@@ -18,8 +20,8 @@ export default function Login(props) {
   let dispatch = useDispatch();
   const onFinish = (values) => {
     console.log("Success:", values);
-    userService
-      .postDangNhap(values)
+    jiraServices
+      .signInJira(values)
       .then((res) => {
         // dispatch(res.data.content);
         console.log(res.data.content);
@@ -30,10 +32,10 @@ export default function Login(props) {
         // Lưu vào localStore
         userLocaService.set(res.data.content);
         // Chuyển hướng về trang chủ nhưng cần load trang :  window.location.href="/"
-        setTimeout(() => {
-          // Dùng navigate để không cần load lại trang
-          navigate("/");
-        }, 1000);
+        // setTimeout(() => {
+        //   // Dùng navigate để không cần load lại trang
+        //   navigate("/");
+        // }, 1000);
         //
       })
       .catch((err) => {
@@ -44,8 +46,8 @@ export default function Login(props) {
     console.log("Failed:", errorInfo);
   };
   return (
-    <div className="flex flex-col justify-center items-center w-screen h-screen">
-      <div className="sm:container p-5">
+    <div className="d-flex flex-column justify-content-center align-items-center w-100 h-100 ">
+      <div className="container p-5">
         <Form
           name="basic"
           labelCol={{
@@ -65,7 +67,7 @@ export default function Login(props) {
           autoComplete="off"
           layout="vertical"
         >
-          <h1 className="text-center text-4xl">Login To CyberBugs</h1>
+          <h1 className="text-center text-4xl">Login To Jira</h1>
           <Form.Item
             label="Email"
             name="email"
@@ -76,7 +78,7 @@ export default function Login(props) {
               },
             ]}
           >
-            <Input prefix={<MailOutlined />} />
+            <Input size="large" prefix={<MailOutlined />} />
           </Form.Item>
 
           <Form.Item
@@ -89,7 +91,7 @@ export default function Login(props) {
               },
             ]}
           >
-            <Input.Password prefix={<LockOutlined />} />
+            <Input.Password size="large" prefix={<LockOutlined />} />
           </Form.Item>
 
           <Form.Item
@@ -99,18 +101,15 @@ export default function Login(props) {
             }}
             className="text-center"
           >
-            <Button
-              className="bg-green-400 text-white hover:bg-white"
+            <button
+              className="btn btn-outline-primary w-100 mt-5"
               htmlType="submit"
             >
               Login
-            </Button>
+            </button>
           </Form.Item>
         </Form>
-        <button
-          onClick={getUserInfor}
-          className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded"
-        >
+        <button className="btn btn-outline-primary" onClick={getUserInfor}>
           checkAPI
         </button>
       </div>

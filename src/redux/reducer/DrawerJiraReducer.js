@@ -2,6 +2,7 @@ import {
   OPEN_DRAWER,
   OPEN_FORM,
   OPEN_FORM_EDIT_PROJECT,
+  SET_EDIT_SUBMIT_PROJECT,
 } from "../constant/jiraConstant";
 import { CLOSE_DRAWER } from "./../constant/jiraConstant";
 import React from "react";
@@ -26,6 +27,10 @@ export const DrawerJiraReducer = (state = initialState, action) => {
         visible: true,
         ComponentContentDrawer: action.Component,
       };
+    }
+    case SET_EDIT_SUBMIT_PROJECT: {
+      state.callBackSubmit = action.submitFunction;
+      return { ...state };
     }
 
     default:

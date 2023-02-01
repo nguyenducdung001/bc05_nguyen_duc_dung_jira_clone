@@ -9,6 +9,9 @@ import {
 } from "./../../redux/constant/jiraConstant";
 
 function CreateProject(props) {
+  let arrProjectCategory = useSelector((state) => {
+    return state.ProjectCategoryReducer.arrProjectCategory;
+  });
   const dispatch = useDispatch();
   const {
     values,
@@ -26,9 +29,6 @@ function CreateProject(props) {
     });
   }, []);
 
-  let arrProjectCategory = useSelector((state) => {
-    return state.ProjectCategoryReducer.arrProjectCategory;
-  });
   // console.log("KetQua", arrProjectCategory);
   //
   const handleEditChange = (content, editor) => {

@@ -4,11 +4,13 @@ import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  DELETE_PROJECT_SAGA,
   GET_LIST_PROJECT_SAGA,
   OPEN_DRAWER,
   OPEN_FORM_EDIT_PROJECT,
 } from "../../../redux/constant/jiraConstant";
 import FormEditProject from "../../../components/Forms/FormEditProject/FormEditProject";
+import { EDIT_PROJECT } from "./../../../redux/constant/jiraConstant";
 
 export default function ProjectManagement(props) {
   // Sử dụng useDispatch để gọi action
@@ -111,22 +113,37 @@ export default function ProjectManagement(props) {
       title: "Action",
       key: "action",
       render: (text, record, index) => (
-        <Space
-          size="middle"
-          onClick={() => {
-            const action = {
-              type: OPEN_FORM_EDIT_PROJECT,
-              Component: <FormEditProject />,
-            };
+        <Space size="middle">
+          <Button
+            onClick={() => {
+              const action = {
+                type: OPEN_FORM_EDIT_PROJECT,
+                Component: <FormEditProject />,
+              };
 
-            // dispatch lên reducer nội dung drawer
-            dispatch(action);
-          }}
-        >
-          <Button type="primary">
+              // dispatch lên reducer nội dung drawer
+              dispatch(action);
+              // dispatch dòng dữ liệu hiện tại lên reducer
+              const actionEditProject = {
+                type: EDIT_PROJECT,
+                projectEditModal: record,
+              };
+              dispatch(actionEditProject);
+            }}
+            type="primary"
+          >
             <EditOutlined />
           </Button>
-          <Button type="primary" danger>
+          <Button
+            onClick={() => {
+              dispatch({
+                type: DELETE_PROJECT_SAGA,
+                projectId: record.id,
+              });
+            }}
+            type="primary"
+            danger
+          >
             <DeleteOutlined />
           </Button>
         </Space>

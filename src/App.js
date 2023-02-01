@@ -25,6 +25,7 @@ import { useDispatch } from "react-redux";
 import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement/ProjectManagement";
 
 import DrawerJira from "./HOC/DrawerJira";
+import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
 
 // Dùng để phân component
 export const history = createBrowserHistory();
@@ -44,6 +45,7 @@ function App() {
     //Cấu trúc history phiên bản react-router-dom @5.2.0
     <>
       <DrawerJira />
+      <LoadingComponent />
       <Switch>
         <UserLoginTemplate exact path="/login" Component={LoginJira} />
         <UserLoginTemplate exact path="/register" Component={Register} />

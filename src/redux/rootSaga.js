@@ -10,5 +10,7 @@ export function* rootSaga() {
     ProjectSaga.followcreateProjectSaga(),
     UserJiraSaga.followSignInSaga(),
     ProjectSaga.followGetListProjectSaga(),
+    ProjectSaga.followUpdateProjectSaga(),
+    ProjectSaga.followDeleteProjectSaga(),
   ]);
 }

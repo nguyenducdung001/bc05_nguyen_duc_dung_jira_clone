@@ -54,4 +54,12 @@ export const jiraServices = {
       headers: createConfig(),
     });
   },
+  updateProject: (projectUpdate) => {
+    return axios({
+      url: `${BASE_URL}/api/Project/updateProject?projectId=${projectUpdate.id}`,
+      method: "PUT",
+      data: projectUpdate,
+      headers: createConfig(),
+    });
+  },
 };

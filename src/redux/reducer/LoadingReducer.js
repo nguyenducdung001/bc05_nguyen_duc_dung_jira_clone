@@ -1,10 +1,10 @@
-import { DISPLAY_LOADING, HIDE_LOADING } from "../constants/LoadingConst";
+import { DISPLAY_LOADING, HIDE_LOADING } from "./../constant/LoadingConst";
 
 const initialState = {
   isLoading: false,
 };
 
-export default (state = initialState, action) => {
+export const LoadingReducer = (state = initialState, action) => {
   switch (action.type) {
     case DISPLAY_LOADING: {
       state.isLoading = true;

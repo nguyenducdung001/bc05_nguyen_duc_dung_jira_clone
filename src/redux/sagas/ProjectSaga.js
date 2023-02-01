@@ -1,15 +1,19 @@
 import { call, delay, put, takeLatest } from "redux-saga/effects";
 import {
   CREATE_PROJECT_SAGA,
+  DELETE_PROJECT_SAGA,
   GET_ALL_PROJECT,
   GET_LIST_PROJECT,
   GET_LIST_PROJECT_SAGA,
+  UPDATE_PROJECT_SAGA,
 } from "../constant/jiraConstant";
 import { jiraServices } from "../../services/jiraServices";
 
 import { STATUS_CODE } from "../../util/constants/settingSystem";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../constant/LoadingConst";
 import { history } from "../../util/history/history";
+import { CLOSE_DRAWER } from "./../constant/jiraConstant";
+import { projectService } from "../../services/ProjectService";
 
 function* ProjectSaga(action) {
   // Hiển thị loading
@@ -65,4 +69,78 @@ function* getListProjectSaga(action) {
 
 export function* followGetListProjectSaga() {
   yield takeLatest(GET_LIST_PROJECT_SAGA, getListProjectSaga);
+}
+
+// -----updateproject
+
+function* updateProjectSaga(action) {
+  // console.log("action", action);
+  // return;
+  yield put({
+    type: DISPLAY_LOADING,
+  });
+
+  yield delay(500);
+
+  try {
+    const { data, status } = yield call(() =>
+      jiraServices.updateProject(action.projectUpdate)
+    );
+
+    if (status === STATUS_CODE.SUCCESS) {
+      console.log(data);
+      yield put({
+        type: GET_LIST_PROJECT_SAGA,
+      });
+      // yield call(getListProjectSaga);
+      yield put({
+        type: CLOSE_DRAWER,
+      });
+
+      // history.push("/projectmanagement");
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+
+export function* followUpdateProjectSaga() {
+  yield takeLatest(UPDATE_PROJECT_SAGA, updateProjectSaga);
+}
+
+// -----deleteProject
+
+function* deleteProjectSaga(action) {
+  // console.log("action", action);
+  // return;
+  yield put({
+    type: DISPLAY_LOADING,
+  });
+
+  yield delay(500);
+
+  try {
+    const { data, status } = yield call(() =>
+      projectService.deleteProject(action.projectId)
+    );
+
+    if (status === STATUS_CODE.SUCCESS) {
+      console.log(data);
+      yield put({
+        type: GET_LIST_PROJECT_SAGA,
+      });
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+  yield put({
+    type: HIDE_LOADING,
+  });
+}
+
+export function* followDeleteProjectSaga() {
+  yield takeLatest(DELETE_PROJECT_SAGA, deleteProjectSaga);
 }

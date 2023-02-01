@@ -46,6 +46,7 @@ function App() {
     <>
       <DrawerJira />
       <LoadingComponent />
+
       <Switch>
         <UserLoginTemplate exact path="/login" Component={LoginJira} />
         <UserLoginTemplate exact path="/register" Component={Register} />

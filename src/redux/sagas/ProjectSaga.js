@@ -14,6 +14,7 @@ import { DISPLAY_LOADING, HIDE_LOADING } from "../constant/LoadingConst";
 import { history } from "../../util/history/history";
 import { CLOSE_DRAWER } from "./../constant/jiraConstant";
 import { projectService } from "../../services/ProjectService";
+import { notiFunction } from "./../../util/Notification/NotificationJira";
 
 function* ProjectSaga(action) {
   // Hiển thị loading
@@ -132,8 +133,13 @@ function* deleteProjectSaga(action) {
       yield put({
         type: GET_LIST_PROJECT_SAGA,
       });
+
+      notiFunction("success", "Delete project successfully!");
+    } else {
+      notiFunction("error", "Delete project fail!");
     }
   } catch (err) {
+    notiFunction("error", "Delete project fail!");
     console.log(err.response.data);
   }
   yield put({

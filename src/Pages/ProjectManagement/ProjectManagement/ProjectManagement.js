@@ -1,4 +1,4 @@
-import { Button, Space, Table, Tag } from "antd";
+import { Button, Space, Table, Tag, message, Popconfirm } from "antd";
 import React, { useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import parse from "html-react-parser";
@@ -134,18 +134,23 @@ export default function ProjectManagement(props) {
           >
             <EditOutlined />
           </Button>
-          <Button
-            onClick={() => {
+          <Popconfirm
+            placement="top"
+            title="Are you sure to delete this project?"
+            description="Delete this project!"
+            onConfirm={() => {
               dispatch({
                 type: DELETE_PROJECT_SAGA,
                 projectId: record.id,
               });
             }}
-            type="primary"
-            danger
+            okText="Yes"
+            cancelText="No"
           >
-            <DeleteOutlined />
-          </Button>
+            <Button type="primary" danger>
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
         </Space>
       ),
     },

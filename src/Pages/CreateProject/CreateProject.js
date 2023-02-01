@@ -54,7 +54,7 @@ function CreateProject(props) {
             // apiKey="your-api-key"
             // onInit={(evt, editor) => (editorRef.current = editor)}
             name="description"
-            initialValue="<p>This is the initial content of the editor.</p>"
+            initialValue="<p>Project_n</p>"
             init={{
               height: 500,
               menubar: false,

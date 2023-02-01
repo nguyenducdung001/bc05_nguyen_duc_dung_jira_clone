@@ -6,7 +6,7 @@ import Home from "./Pages/Home/Home";
 
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 import Project from "./Pages/Project/Project";
-import Layout from "./HOC/Layout/Layout";
+
 import Register from "./Pages/Register/Register";
 import indexJira from "./indexJira/indexJira";
 import { createBrowserHistory } from "history";
@@ -24,6 +24,8 @@ import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement/ProjectManagement";
 
+import DrawerJira from "./HOC/DrawerJira";
+
 // Dùng để phân component
 export const history = createBrowserHistory();
 
@@ -40,7 +42,8 @@ function App() {
 
   return (
     //Cấu trúc history phiên bản react-router-dom @5.2.0
-    <Router history={history}>
+    <>
+      <DrawerJira />
       <Switch>
         <UserLoginTemplate exact path="/login" Component={LoginJira} />
         <UserLoginTemplate exact path="/register" Component={Register} />
@@ -53,7 +56,7 @@ function App() {
         />
         <Route exact path="/" component={DemoJira} />
       </Switch>
-    </Router>
+    </>
   );
 }
 

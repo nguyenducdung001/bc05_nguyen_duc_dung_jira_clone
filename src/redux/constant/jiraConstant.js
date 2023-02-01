@@ -11,3 +11,11 @@ export const USLOGIN = "USLOGIN";
 export const GET_LIST_PROJECT_SAGA = "GET_LIST_PROJECT_SAGA";
 
 export const GET_LIST_PROJECT = "GET_LIST_PROJECT";
+
+export const OPEN_DRAWER = "OPEN_DRAWER";
+
+export const CLOSE_DRAWER = "CLOSE_DRAWER";
+
+export const OPEN_FORM_EDIT_PROJECT = "OPEN_FORM_EDIT_PROJECT";
+
+export const OPEN_FORM = "OPEN_FORM";

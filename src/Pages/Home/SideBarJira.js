@@ -30,23 +30,24 @@ export default function SideBarJira() {
       <Sider trigger={null} collapsible collapsed={state.collapsed}>
         <div className="text-right" onClick={toggle}>
           <MenuOutlined
-            style={{ color: "#fff", cursor: "pointer", fontSize: "20px" }}
+            style={{ color: "#fff", cursor: "pointer", fontSize: "25px" }}
           />
         </div>
         <div className="logo" />
         <Menu
+          style={{ fontSize: "16px" }}
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
           items={[
             {
               key: "1",
-              icon: <PlusOutlined />,
+              icon: <PlusOutlined style={{ fontSize: "16px" }} />,
               label: "Creata issue",
             },
             {
               key: "2",
-              icon: <SearchOutlined />,
+              icon: <SearchOutlined style={{ fontSize: "16px" }} />,
               label: "Search",
             },
           ]}

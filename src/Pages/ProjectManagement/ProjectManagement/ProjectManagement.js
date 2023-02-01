@@ -3,7 +3,12 @@ import React, { useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
-import { GET_LIST_PROJECT_SAGA } from "../../../redux/constant/jiraConstant";
+import {
+  GET_LIST_PROJECT_SAGA,
+  OPEN_DRAWER,
+  OPEN_FORM_EDIT_PROJECT,
+} from "../../../redux/constant/jiraConstant";
+import FormEditProject from "../../../components/Forms/FormEditProject/FormEditProject";
 
 export default function ProjectManagement(props) {
   // Sử dụng useDispatch để gọi action
@@ -106,7 +111,18 @@ export default function ProjectManagement(props) {
       title: "Action",
       key: "action",
       render: (text, record, index) => (
-        <Space size="middle">
+        <Space
+          size="middle"
+          onClick={() => {
+            const action = {
+              type: OPEN_FORM_EDIT_PROJECT,
+              Component: <FormEditProject />,
+            };
+
+            // dispatch lên reducer nội dung drawer
+            dispatch(action);
+          }}
+        >
           <Button type="primary">
             <EditOutlined />
           </Button>

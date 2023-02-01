@@ -1,33 +1,57 @@
-import React from "react";
-// import "../../index.css";
+import {
+  MenuFoldOutlined,
+  MenuUnfoldOutlined,
+  UploadOutlined,
+  UserOutlined,
+  VideoCameraOutlined,
+  MenuOutlined,
+  SearchOutlined,
+  PlusOutlined,
+} from "@ant-design/icons";
+import { Layout, Menu, theme } from "antd";
+import React, { useState } from "react";
+
+const { Header, Sider, Content } = Layout;
 
 export default function SideBarJira() {
+  const [state, setState] = useState({ collapsed: false });
+  const {
+    token: { colorBgContainer },
+  } = theme.useToken();
+
+  const toggle = () => {
+    setState({
+      collapsed: !state.collapsed,
+    });
+  };
+
   return (
-    <div className="sideBar">
-      <div className="sideBar-top">
-        <div className="sideBar-icon">
-          <i className="fab fa-jira" />
+    <Layout>
+      <Sider trigger={null} collapsible collapsed={state.collapsed}>
+        <div className="text-right" onClick={toggle}>
+          <MenuOutlined
+            style={{ color: "#fff", cursor: "pointer", fontSize: "20px" }}
+          />
         </div>
-        <div
-          className="sideBar-icon"
-          data-toggle="modal"
-          data-target="#searchModal"
-          style={{ cursor: "pointer" }}
-        >
-          <i className="fa fa-search" />
-          <span className="title">SEARCH ISSUES</span>
-        </div>
-        <div className="sideBar-icon">
-          <i className="fa fa-plus" />
-          <span className="title">CREATE ISSUES</span>
-        </div>
-      </div>
-      <div className="sideBar-bottom">
-        <div className="sideBar-icon">
-          <i className="fa fa-question-circle" />
-          <span className="title">ABOUT</span>
-        </div>
-      </div>
-    </div>
+        <div className="logo" />
+        <Menu
+          theme="dark"
+          mode="inline"
+          defaultSelectedKeys={["1"]}
+          items={[
+            {
+              key: "1",
+              icon: <PlusOutlined />,
+              label: "Creata issue",
+            },
+            {
+              key: "2",
+              icon: <SearchOutlined />,
+              label: "Search",
+            },
+          ]}
+        />
+      </Sider>
+    </Layout>
   );
 }

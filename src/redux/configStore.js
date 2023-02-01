@@ -9,6 +9,7 @@ import { rootSaga } from "./rootSaga";
 import createSagaMiddleware from "redux-saga";
 import { HistoryReducer } from "./reducer/HistoryReducer";
 import { UserLoginJiraReducer } from "./reducer/UserJiraReducer";
+import { ProjectJiraReducer } from "./reducer/ProjectJiraReducer";
 
 const middleWareSaga = createSagaMiddleware();
 
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
   ProjectCategoryReducer,
   HistoryReducer,
   UserLoginJiraReducer,
+  ProjectJiraReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk, middleWareSaga));

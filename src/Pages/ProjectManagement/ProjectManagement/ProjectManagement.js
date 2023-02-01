@@ -1,92 +1,25 @@
-import { Button, Space, Table } from "antd";
-import React, { useState } from "react";
+import { Button, Space, Table, Tag } from "antd";
+import React, { useEffect, useState } from "react";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import parse from "html-react-parser";
+import { useDispatch, useSelector } from "react-redux";
+import { GET_LIST_PROJECT_SAGA } from "../../../redux/constant/jiraConstant";
 
-const data = [
-  {
-    id: 10683,
-    projectName: "test2",
-    description: "<p>123</p>",
-    categoryId: 2,
-    categoryName: "Dự án phần mềm",
-    alias: "test2",
-    deleted: false,
-  },
-  {
-    id: 10684,
-    projectName: "test3",
-    description: "123",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "test3",
-    deleted: false,
-  },
-  {
-    id: 10685,
-    projectName: "123test",
-    description: "<p>123</p>",
-    categoryId: 2,
-    categoryName: "Dự án phần mềm",
-    alias: "123test",
-    deleted: false,
-  },
-  {
-    id: 10686,
-    projectName: "test123",
-    description: "<p>123</p>",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "test123",
-    deleted: false,
-  },
-  {
-    id: 10691,
-    projectName: "New Project23",
-    description: "<p>Desc xin</p>",
-    categoryId: 2,
-    categoryName: "Dự án phần mềm",
-    alias: "new-project23",
-    deleted: false,
-  },
+export default function ProjectManagement(props) {
+  // Sử dụng useDispatch để gọi action
+  const dispatch = useDispatch();
 
-  {
-    id: 10694,
-    projectName: "Capstone Jira",
-    description: "<div>\n<div>DrawerCyberBugs</div>\n</div>",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "capstone-jira",
-    deleted: false,
-  },
-  {
-    id: 10696,
-    projectName: "project demo",
-    description: "<p>alo alo</p>",
-    categoryId: 2,
-    categoryName: "Dự án phần mềm",
-    alias: "project-demo",
-    deleted: false,
-  },
-  {
-    id: 10697,
-    projectName: "string",
-    description: "string",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "string",
-    deleted: false,
-  },
-  {
-    id: 10698,
-    projectName: "Test_Login_CodeLearnio",
-    description: "<p>trung</p>",
-    categoryId: 1,
-    categoryName: "Dự án web",
-    alias: "test_login_codelearnio",
-    deleted: false,
-  },
-];
-export default function ProjectManagement() {
+  useEffect(() => {
+    dispatch({
+      type: GET_LIST_PROJECT_SAGA,
+    });
+  }, []);
+
+  // Lấy dự liệu từ reducer về component
+  const projectList = useSelector(
+    (state) => state.ProjectJiraReducer.projectList
+  );
+
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const handleChange = (pagination, filters, sorter) => {
@@ -109,39 +42,77 @@ export default function ProjectManagement() {
   };
   const columns = [
     {
-      title: "id",
+      title: "ID",
       dataIndex: "id",
       key: "id",
+      sorter: (a, b) => a.id - b.id,
+      // sortDirections: ["descend"],
     },
     {
-      title: "projectName",
+      title: "Project Name",
       dataIndex: "projectName",
       key: "projectName",
+      sorter: (a, b) => {
+        let projectName1 = a.projectName.trim().toLowerCase();
+        let projectName2 = b.projectName.trim().toLowerCase();
+        if (projectName1 < projectName2) {
+          return -1;
+        } else {
+          return 1;
+        }
+      },
     },
+    // {
+    //   title: "Description",
+    //   dataIndex: "description",
+    //   key: "description",
+    //   render: (text) => {
+    //     let string = parse(text);
+    //     return <div>{string}</div>;
+    //   },
+    // },
     {
-      title: "description",
-      dataIndex: "description",
-      key: "description",
-      render: (text) => {
-        return <div>{text}</div>;
+      title: "Creator",
+      // dataIndex: "categoryName",
+      key: "creator",
+      render: (text, record, index) => {
+        return <Tag color="cyan">{record.creator.name}</Tag>;
+      },
+      sorter: (a, b) => {
+        let creator1 = a.creator.name.trim().toLowerCase();
+        let creator2 = b.creator.name.trim().toLowerCase();
+        if (creator1 < creator2) {
+          return -1;
+        } else {
+          return 1;
+        }
       },
     },
     {
-      title: "categoryName",
+      title: "Category Name",
       dataIndex: "categoryName",
       key: "categoryName",
+      sorter: (a, b) => {
+        let categoryName1 = a.categoryName.trim().toLowerCase();
+        let categoryName2 = b.categoryName.trim().toLowerCase();
+        if (categoryName1 < categoryName2) {
+          return -1;
+        } else {
+          return 1;
+        }
+      },
     },
     {
       title: "Action",
       key: "action",
       render: (text, record, index) => (
         <Space size="middle">
-          <a>
+          <Button type="primary">
             <EditOutlined />
-          </a>
-          <a>
+          </Button>
+          <Button type="primary" danger>
             <DeleteOutlined />
-          </a>
+          </Button>
         </Space>
       ),
     },
@@ -160,7 +131,7 @@ export default function ProjectManagement() {
       <Table
         columns={columns}
         rowKey={"id"}
-        dataSource={data}
+        dataSource={projectList}
         onChange={handleChange}
       />
     </div>

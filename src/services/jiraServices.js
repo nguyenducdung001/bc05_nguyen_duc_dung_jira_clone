@@ -47,4 +47,11 @@ export const jiraServices = {
       // headers: createConfig(),
     });
   },
+  getListProject: () => {
+    return axios({
+      url: `${BASE_URL}/api/Project/getAllProject`,
+      method: "GET",
+      headers: createConfig(),
+    });
+  },
 };

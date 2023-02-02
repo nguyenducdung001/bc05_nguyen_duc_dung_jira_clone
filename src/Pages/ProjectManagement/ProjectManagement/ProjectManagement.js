@@ -1,16 +1,30 @@
-import { Button, Space, Table, Tag, message, Popconfirm } from "antd";
-import React, { useEffect, useState } from "react";
-import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
+import {
+  Button,
+  Space,
+  Table,
+  Tag,
+  message,
+  Popconfirm,
+  Avatar,
+  Popover,
+  AutoComplete,
+} from "antd";
+import React, { useEffect, useState, useRef } from "react";
+import { EditOutlined, DeleteOutlined, CloseOutlined } from "@ant-design/icons";
 import parse from "html-react-parser";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  ADD_USER_PROJECT_API,
   DELETE_PROJECT_SAGA,
   GET_LIST_PROJECT_SAGA,
+  GET_USER_API,
   OPEN_DRAWER,
   OPEN_FORM_EDIT_PROJECT,
+  REMOVE_USER_PROJECT_API,
 } from "../../../redux/constant/jiraConstant";
 import FormEditProject from "../../../components/Forms/FormEditProject/FormEditProject";
 import { EDIT_PROJECT } from "./../../../redux/constant/jiraConstant";
+import Item from "antd/es/list/Item";
 
 export default function ProjectManagement(props) {
   // Sử dụng useDispatch để gọi action
@@ -26,11 +40,16 @@ export default function ProjectManagement(props) {
   const projectList = useSelector(
     (state) => state.ProjectJiraReducer.projectList
   );
+  const { userSearch } = useSelector((state) => state.UserLoginJiraReducer);
+
+  const [value, setValue] = useState("");
+
+  const searchRef = useRef(null);
 
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
+    // console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
@@ -107,6 +126,125 @@ export default function ProjectManagement(props) {
         } else {
           return 1;
         }
+      },
+    },
+    {
+      title: "Members",
+      key: "members",
+      render: (text, record, index) => {
+        return (
+          <div>
+            {record.members?.slice(0, 3).map((member, index) => {
+              return (
+                <Popover
+                  key={index}
+                  placement="bottom"
+                  title="Members"
+                  content={() => {
+                    return (
+                      <table className="table">
+                        <thead>
+                          <tr>
+                            <th>ID</th>
+                            <th>Avata</th>
+                            <th>Name</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {record.members?.map((member, index) => {
+                            return (
+                              <tr key={index}>
+                                <td>{member.userId}</td>
+                                <td>
+                                  <img
+                                    width={30}
+                                    height={30}
+                                    style={{ borderRadius: "15px" }}
+                                    src={member.avatar}
+                                  />
+                                </td>
+                                <td>{member.name}</td>
+                                <td>
+                                  <button
+                                    onClick={() => {
+                                      dispatch({
+                                        type: REMOVE_USER_PROJECT_API,
+                                        userProject: {
+                                          userId: member.userId,
+                                          projectId: record.id,
+                                        },
+                                      });
+                                    }}
+                                    style={{ borderRadius: "50%" }}
+                                    className="btn btn-danger"
+                                  >
+                                    {/* <CloseOutlined /> */}X
+                                  </button>
+                                </td>
+                              </tr>
+                            );
+                          })}
+                        </tbody>
+                      </table>
+                    );
+                  }}
+                >
+                  <Avatar key={index} src={member.avatar} />
+                </Popover>
+              );
+            })}
+            {record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+            <Popover
+              placement="bottom"
+              title="Add user"
+              content={() => {
+                return (
+                  <AutoComplete
+                    style={{
+                      width: "100%",
+                    }}
+                    onSearch={(value) => {
+                      if (searchRef.current) {
+                        clearTimeout(searchRef.current);
+                      }
+                      searchRef.current = setTimeout(() => {
+                        dispatch({
+                          type: GET_USER_API,
+                          keyWord: value,
+                        });
+                      }, 300);
+                    }}
+                    options={userSearch?.map((user, index) => {
+                      return {
+                        label: user.name,
+                        value: user.userId.toString(),
+                      };
+                    })}
+                    value={value}
+                    onChange={(text) => {
+                      setValue(text);
+                    }}
+                    onSelect={(valueSelect, option) => {
+                      // Set giá trị của hộp thoại = option.label
+                      setValue(option.label);
+                      // Gửi api vể backend
+                      dispatch({
+                        type: ADD_USER_PROJECT_API,
+                        userProject: {
+                          projectId: record.id,
+                          userId: valueSelect,
+                        },
+                      });
+                    }}
+                  />
+                );
+              }}
+              trigger="click"
+            >
+              <Button style={{ borderRadius: "50%" }}>+</Button>
+            </Popover>
+          </div>
+        );
       },
     },
     {

@@ -1,5 +1,13 @@
 import { call, delay, put, takeLatest, select } from "redux-saga/effects";
-import { USER_SIGNIN_API, USLOGIN } from "./../constant/jiraConstant";
+import {
+  ADD_USER_PROJECT_API,
+  GET_LIST_PROJECT_SAGA,
+  GET_USER_API,
+  GET_USER_SEARCH,
+  REMOVE_USER_PROJECT_API,
+  USER_SIGNIN_API,
+  USLOGIN,
+} from "./../constant/jiraConstant";
 import { jiraServices } from "./../../services/jiraServices";
 import { DISPLAY_LOADING, HIDE_LOADING } from "./../constant/LoadingConst";
 import {
@@ -8,6 +16,7 @@ import {
   USER_LOGIN_SETTING_SYSTEM,
 } from "./../../util/constants/settingSystem";
 import { history } from "../../util/history/history";
+import { userService } from "../../services/userService";
 
 // Quản lí action saga
 
@@ -55,4 +64,70 @@ function* signInSaga(action) {
 
 export function* followSignInSaga() {
   yield takeLatest(USER_SIGNIN_API, signInSaga);
+}
+
+// ---getUser
+
+function* getUserSaga(action) {
+  // console.log("keyWord", action.keyWord);
+  try {
+    // Gọi api lấy dữ liệu về
+    const { data, status } = yield call(() =>
+      userService.getUser(action.keyWord)
+    );
+
+    yield put({
+      type: GET_USER_SEARCH,
+      listUserSearch: data.content,
+    });
+    // console.log("data", data);
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* followGetUserSaga() {
+  yield takeLatest(GET_USER_API, getUserSaga);
+}
+
+// ---addUserProject
+
+function* addUserProjectSaga(action) {
+  try {
+    // Gọi api lấy dữ liệu về
+    const { data, status } = yield call(() =>
+      userService.assignUserProject(action.userProject)
+    );
+
+    yield put({
+      type: GET_LIST_PROJECT_SAGA,
+    });
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* followAddUserProjectSaga() {
+  yield takeLatest(ADD_USER_PROJECT_API, addUserProjectSaga);
+}
+
+// ---removeUserFromProject
+
+function* removeUserFromProjectSaga(action) {
+  try {
+    // Gọi api lấy dữ liệu về
+    const { data, status } = yield call(() =>
+      userService.removeUserFromProject(action.userProject)
+    );
+
+    yield put({
+      type: GET_LIST_PROJECT_SAGA,
+    });
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* followremoveUserFromProjectSaga() {
+  yield takeLatest(REMOVE_USER_PROJECT_API, removeUserFromProjectSaga);
 }

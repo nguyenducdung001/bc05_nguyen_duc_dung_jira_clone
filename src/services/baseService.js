@@ -1,5 +1,6 @@
 import axios from "axios";
-import { BASE_URL, createConfig } from "./../api/configURL";
+import { BASE_URL, createConfig, TOKEN_CYBERSOFT } from "./../api/configURL";
+import { TOKEN } from "./../util/constants/settingSystem";
 
 export class baseService {
   put = (url, model) => {
@@ -16,7 +17,10 @@ export class baseService {
       url: `${BASE_URL}/${url}`,
       method: "POST",
       data: model,
-      headers: createConfig(),
+      headers: {
+        Authorization: "Bearer " + localStorage.getItem(TOKEN),
+        TokenCybersoft: TOKEN_CYBERSOFT,
+      },
     });
   };
   get = (url) => {

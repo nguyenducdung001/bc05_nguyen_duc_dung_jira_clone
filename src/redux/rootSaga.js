@@ -12,5 +12,8 @@ export function* rootSaga() {
     ProjectSaga.followGetListProjectSaga(),
     ProjectSaga.followUpdateProjectSaga(),
     ProjectSaga.followDeleteProjectSaga(),
+    UserJiraSaga.followGetUserSaga(),
+    UserJiraSaga.followAddUserProjectSaga(),
+    UserJiraSaga.followremoveUserFromProjectSaga(),
   ]);
 }

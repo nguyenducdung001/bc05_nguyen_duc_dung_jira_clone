@@ -25,6 +25,7 @@ import {
 import FormEditProject from "../../../components/Forms/FormEditProject/FormEditProject";
 import { EDIT_PROJECT } from "./../../../redux/constant/jiraConstant";
 import Item from "antd/es/list/Item";
+import { NavLink } from "react-router-dom";
 
 export default function ProjectManagement(props) {
   // Sử dụng useDispatch để gọi action
@@ -86,6 +87,9 @@ export default function ProjectManagement(props) {
         } else {
           return 1;
         }
+      },
+      render: (text, record, index) => {
+        return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>;
       },
     },
     // {

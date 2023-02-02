@@ -5,6 +5,8 @@ import {
   GET_ALL_PROJECT,
   GET_LIST_PROJECT,
   GET_LIST_PROJECT_SAGA,
+  GET_PROJECT_DETAIL_API,
+  PUT_PROJECT_DETAIL,
   UPDATE_PROJECT_SAGA,
 } from "../constant/jiraConstant";
 import { jiraServices } from "../../services/jiraServices";
@@ -149,4 +151,37 @@ function* deleteProjectSaga(action) {
 
 export function* followDeleteProjectSaga() {
   yield takeLatest(DELETE_PROJECT_SAGA, deleteProjectSaga);
+}
+
+// -----getProjectDetailSaga
+
+function* getProjectDetailSaga(action) {
+  // console.log("action", action);
+  // return;
+  // yield put({
+  //   type: DISPLAY_LOADING,
+  // });
+
+  // yield delay(500);
+
+  try {
+    const { data, status } = yield call(() =>
+      projectService.getProjectDetail(action.projectId)
+    );
+
+    yield put({
+      type: PUT_PROJECT_DETAIL,
+      projectDetail: data.content,
+    });
+  } catch (err) {
+    console.log("404 not found!");
+    // history.push("/projectmanagement");
+  }
+  // yield put({
+  //   type: HIDE_LOADING,
+  // });
+}
+
+export function* followGetProjectDetailSaga() {
+  yield takeLatest(GET_PROJECT_DETAIL_API, getProjectDetailSaga);
 }

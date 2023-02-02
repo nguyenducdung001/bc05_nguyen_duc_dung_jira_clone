@@ -10,10 +10,15 @@ import {
 } from "@ant-design/icons";
 import { Layout, Menu, theme } from "antd";
 import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { OPEN_FORM_CREATE_TASK } from "../../redux/constant/jiraConstant";
+import FormCreateTask from "./../../components/Forms/FormCreateTask/FormCreateTask";
 
 const { Header, Sider, Content } = Layout;
 
 export default function SideBarJira() {
+  const dispatch = useDispatch();
+
   const [state, setState] = useState({ collapsed: false });
   const {
     token: { colorBgContainer },
@@ -39,19 +44,27 @@ export default function SideBarJira() {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={["1"]}
-          items={[
-            {
-              key: "1",
-              icon: <PlusOutlined style={{ fontSize: "16px" }} />,
-              label: "Creata issue",
-            },
-            {
-              key: "2",
-              icon: <SearchOutlined style={{ fontSize: "16px" }} />,
-              label: "Search",
-            },
-          ]}
-        />
+        >
+          <Menu.Item
+            onClick={() => {
+              dispatch({
+                type: OPEN_FORM_CREATE_TASK,
+                Component: <FormCreateTask />,
+                title: "Create task",
+              });
+            }}
+            key={1}
+            icon={<PlusOutlined style={{ fontSize: "16px" }} />}
+          >
+            Create task
+          </Menu.Item>
+          <Menu.Item
+            key={2}
+            icon={<SearchOutlined style={{ fontSize: "16px" }} />}
+          >
+            Search
+          </Menu.Item>
+        </Menu>
       </Sider>
     </Layout>
   );

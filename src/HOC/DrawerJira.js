@@ -17,9 +17,8 @@ import { CLOSE_DRAWER } from "./../redux/constant/jiraConstant";
 const { Option } = Select;
 
 export default function DrawerJira(props) {
-  const { visible, ComponentContentDrawer, callBackSubmit } = useSelector(
-    (state) => state.DrawerJiraReducer
-  );
+  const { visible, ComponentContentDrawer, callBackSubmit, title } =
+    useSelector((state) => state.DrawerJiraReducer);
   const dispatch = useDispatch();
 
   const showDrawer = () => {
@@ -34,7 +33,7 @@ export default function DrawerJira(props) {
         New account
       </Button> */}
       <Drawer
-        title="Create a new account"
+        title={title}
         width={720}
         onClose={onClose}
         open={visible}

@@ -158,11 +158,11 @@ export function* followDeleteProjectSaga() {
 function* getProjectDetailSaga(action) {
   // console.log("action", action);
   // return;
-  // yield put({
-  //   type: DISPLAY_LOADING,
-  // });
+  yield put({
+    type: DISPLAY_LOADING,
+  });
 
-  // yield delay(500);
+  yield delay(500);
 
   try {
     const { data, status } = yield call(() =>
@@ -175,11 +175,11 @@ function* getProjectDetailSaga(action) {
     });
   } catch (err) {
     console.log("404 not found!");
-    // history.push("/projectmanagement");
+    history.push("/projectmanagement");
   }
-  // yield put({
-  //   type: HIDE_LOADING,
-  // });
+  yield put({
+    type: HIDE_LOADING,
+  });
 }
 
 export function* followGetProjectDetailSaga() {

@@ -10,6 +10,7 @@ if (localStorage.getItem(USER_LOGIN_SETTING_SYSTEM)) {
 const initialState = {
   userLogin: usLogin,
   userSearch: [],
+  // arrUser: [] //get for select of create task
 };
 
 export const UserLoginJiraReducer = (state = initialState, action) => {

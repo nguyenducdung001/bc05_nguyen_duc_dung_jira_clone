@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
 import { connect, useDispatch, useSelector } from "react-redux";
 import {
@@ -13,6 +13,8 @@ function FormEditProject(props) {
     return state.ProjectCategoryReducer.arrProjectCategory;
   });
   const dispatch = useDispatch();
+
+  const [firstValue, setFirstValue] = useState("");
 
   const {
     values,
@@ -30,6 +32,7 @@ function FormEditProject(props) {
   // };
 
   useEffect(() => {
+    setFirstValue(values.description);
     // Gọi api load project category
     dispatch({ type: GET_ALL_PROJECT_CATEGORY });
     // load sự kiệ submit lên drawer
@@ -98,7 +101,7 @@ function FormEditProject(props) {
               // apiKey="your-api-key"
               // onInit={(evt, editor) => (editorRef.current = editor)}
               name="description"
-              initialValue={values.description}
+              initialValue={firstValue}
               init={{
                 height: 500,
                 menubar: false,

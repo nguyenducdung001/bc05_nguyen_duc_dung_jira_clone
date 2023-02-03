@@ -1,7 +1,11 @@
-import { GET_LIST_PROJECT } from "./../constant/jiraConstant";
+import {
+  GET_ALL_PROJECT_DROPDOWN,
+  GET_LIST_PROJECT,
+} from "./../constant/jiraConstant";
 
 const initialState = {
   projectList: [],
+  arrProject: [], //get all project for dropdown
 };
 
 export const ProjectJiraReducer = (state = initialState, action) => {
@@ -10,6 +14,9 @@ export const ProjectJiraReducer = (state = initialState, action) => {
     case GET_LIST_PROJECT: {
       state.projectList = action.projectList;
       return { ...state };
+    }
+    case GET_ALL_PROJECT_DROPDOWN: {
+      return { ...state, arrProject: action.arrProject };
     }
     default:
       return { ...state };

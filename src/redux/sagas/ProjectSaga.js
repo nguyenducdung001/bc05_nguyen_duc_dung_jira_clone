@@ -3,6 +3,8 @@ import {
   CREATE_PROJECT_SAGA,
   DELETE_PROJECT_SAGA,
   GET_ALL_PROJECT,
+  GET_ALL_PROJECT_DROPDOWN,
+  GET_ALL_PROJECT_DROPDOWN_SAGA,
   GET_LIST_PROJECT,
   GET_LIST_PROJECT_SAGA,
   GET_PROJECT_DETAIL_API,
@@ -53,7 +55,7 @@ export function* followcreateProjectSaga() {
   yield takeLatest(CREATE_PROJECT_SAGA, ProjectSaga);
 }
 
-// ---------get all project
+// ---------get list project
 
 function* getListProjectSaga(action) {
   try {
@@ -184,4 +186,25 @@ function* getProjectDetailSaga(action) {
 
 export function* followGetProjectDetailSaga() {
   yield takeLatest(GET_PROJECT_DETAIL_API, getProjectDetailSaga);
+}
+
+// ---------get all project
+
+function* getAllProjectSaga(action) {
+  try {
+    const { data, status } = yield call(() => projectService.getAllProject());
+
+    if (status === STATUS_CODE.SUCCESS) {
+      yield put({
+        type: GET_ALL_PROJECT_DROPDOWN,
+        arrProject: data.content,
+      });
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* followGetAllProjectSaga() {
+  yield takeLatest(GET_ALL_PROJECT_DROPDOWN_SAGA, getAllProjectSaga);
 }

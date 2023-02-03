@@ -17,6 +17,10 @@ import {
 } from "./../../util/constants/settingSystem";
 import { history } from "../../util/history/history";
 import { userService } from "../../services/userService";
+import {
+  GET_USER_BY_PROJECT_ID,
+  GET_USER_BY_PROJECT_ID_SAGA,
+} from "../constant/UserConstant";
 
 // Quản lí action saga
 
@@ -130,4 +134,37 @@ function* removeUserFromProjectSaga(action) {
 
 export function* followremoveUserFromProjectSaga() {
   yield takeLatest(REMOVE_USER_PROJECT_API, removeUserFromProjectSaga);
+}
+
+// ---getprojectId
+
+function* getUserByProjectIdSaga(action) {
+  const { idProject } = action;
+
+  try {
+    const { data, status } = yield call(() =>
+      userService.getUserByProjectId(idProject)
+    );
+
+    if (status === STATUS_CODE.SUCCESS) {
+      console.log("checkdata", data);
+      yield put({
+        type: GET_USER_BY_PROJECT_ID,
+        arrUser: data.content,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    console.log(err.response?.data);
+    if (err.response?.data.statusCode === STATUS_CODE.NOT_FOUND) {
+      yield put({
+        type: GET_USER_BY_PROJECT_ID,
+        arrUser: [],
+      });
+    }
+  }
+}
+
+export function* followGetUserByProjectIdSaga() {
+  yield takeLatest(GET_USER_BY_PROJECT_ID_SAGA, getUserByProjectIdSaga);
 }

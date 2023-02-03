@@ -3,13 +3,13 @@ import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { CLOSE_DRAWER, GET_LIST_PROJECT } from "../constant/jiraConstant";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../constant/LoadingConst";
 import { notiFunction } from "./../../util/Notification/NotificationJira";
-import { CREATE_TASK_SAGA } from "../constant/TaskConstants";
+import { CREATE_TASK, CREATE_TASK_SAGA } from "../constant/TaskConstants";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
 import { taskService } from "../../services/TaskService";
 
 function* createTaskSaga(action) {
-  console.log("taskOject", action);
   // Hiển thị loading
+
   yield put({
     type: DISPLAY_LOADING,
   });
@@ -20,6 +20,7 @@ function* createTaskSaga(action) {
     const { data, status } = yield call(() =>
       taskService.createTask(action.taskOject)
     );
+    console.log(action);
     if (status === STATUS_CODE.SUCCESS) {
       console.log(data);
 

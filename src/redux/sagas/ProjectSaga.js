@@ -19,6 +19,7 @@ import { history } from "../../util/history/history";
 import { CLOSE_DRAWER } from "./../constant/jiraConstant";
 import { projectService } from "../../services/ProjectService";
 import { notiFunction } from "./../../util/Notification/NotificationJira";
+import { GET_USER_BY_PROJECT_ID_SAGA } from "../constant/UserConstant";
 
 function* ProjectSaga(action) {
   // Hiển thị loading
@@ -198,6 +199,10 @@ function* getAllProjectSaga(action) {
       yield put({
         type: GET_ALL_PROJECT_DROPDOWN,
         arrProject: data.content,
+      });
+      yield put({
+        type: GET_USER_BY_PROJECT_ID_SAGA,
+        idProject: data.content[0].id,
       });
     }
   } catch (err) {

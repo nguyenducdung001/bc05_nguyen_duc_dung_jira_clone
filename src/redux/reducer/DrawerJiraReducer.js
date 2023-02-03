@@ -4,6 +4,7 @@ import {
   OPEN_FORM_CREATE_TASK,
   OPEN_FORM_EDIT_PROJECT,
   SET_EDIT_SUBMIT_PROJECT,
+  SET_SUBMIT_CREATE_TASK,
 } from "../constant/jiraConstant";
 import { CLOSE_DRAWER } from "./../constant/jiraConstant";
 import React from "react";
@@ -40,6 +41,9 @@ export const DrawerJiraReducer = (state = initialState, action) => {
       state.ComponentContentDrawer = action.Component;
       state.title = action.title;
       return { ...state };
+    }
+    case SET_SUBMIT_CREATE_TASK: {
+      return { ...state, callBackSubmit: action.submitFunction };
     }
 
     default:

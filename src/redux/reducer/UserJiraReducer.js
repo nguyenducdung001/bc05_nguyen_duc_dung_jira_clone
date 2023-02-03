@@ -1,4 +1,5 @@
 import { USER_LOGIN_SETTING_SYSTEM } from "../../util/constants/settingSystem";
+import { GET_USER_BY_PROJECT_ID } from "../constant/UserConstant";
 import { GET_USER_SEARCH, USLOGIN } from "./../constant/jiraConstant";
 
 let usLogin = {};
@@ -10,7 +11,7 @@ if (localStorage.getItem(USER_LOGIN_SETTING_SYSTEM)) {
 const initialState = {
   userLogin: usLogin,
   userSearch: [],
-  // arrUser: [] //get for select of create task
+  arrUser: [], //get for select of create task
 };
 
 export const UserLoginJiraReducer = (state = initialState, action) => {
@@ -23,6 +24,9 @@ export const UserLoginJiraReducer = (state = initialState, action) => {
       state.userSearch = action.listUserSearch;
       // console.log("getUser", state);
       return { ...state };
+    }
+    case GET_USER_BY_PROJECT_ID: {
+      return { ...state, arrUser: action.arrUser };
     }
     default:
       return { ...state };

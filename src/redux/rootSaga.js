@@ -5,6 +5,7 @@ import * as UserJiraSaga from "./sagas/UserJiraSaga";
 import * as TaskTypeSaga from "./sagas/TaskTypeSaga";
 import * as PrioritySaga from "./sagas/PrioritySaga";
 import * as TaskSaga from "./sagas/TaskSaga";
+import * as StatusSaga from "./sagas/StatusSaga";
 
 export function* rootSaga() {
   yield all([
@@ -12,6 +13,7 @@ export function* rootSaga() {
     ProjectCategorySaga.followAllProjectCategory(),
     ProjectSaga.followcreateProjectSaga(),
     UserJiraSaga.followSignInSaga(),
+    UserJiraSaga.followGetUserByProjectIdSaga(),
     ProjectSaga.followGetListProjectSaga(),
     ProjectSaga.followUpdateProjectSaga(),
     ProjectSaga.followDeleteProjectSaga(),
@@ -23,5 +25,6 @@ export function* rootSaga() {
     TaskTypeSaga.followgetAllTaskTypeSaga(),
     PrioritySaga.followgetAllPrioritySaga(),
     TaskSaga.followCreateTaskSaga(),
+    StatusSaga.followGetAllStatusSaga(),
   ]);
 }

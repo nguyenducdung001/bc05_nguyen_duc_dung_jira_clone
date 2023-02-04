@@ -1,8 +1,18 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GET_ALL_PRIORITY_SAGA } from "../../redux/constant/PriorityConstant";
 import { GET_ALL_STATUS_SAGA } from "../../redux/constant/StatusConstant";
-import { UPDATE_STATUS_TASK_SAGA } from "../../redux/constant/TaskConstants";
+import {
+  CHANGE_ASSIGNESS,
+  CHANGE_TASK_MODAL,
+  REMOVE_USER_ASSIGNESS,
+  UPDATE_STATUS_TASK_SAGA,
+} from "../../redux/constant/TaskConstants";
+import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstant";
+import { Editor } from "@tinymce/tinymce-react";
+import { Select } from "antd";
+
+const { option } = Select;
 
 export default function ModalJira(props) {
   const { taskDetailModel } = useSelector((state) => state.TaskReducer);
@@ -11,19 +21,125 @@ export default function ModalJira(props) {
 
   const { arrPriority } = useSelector((state) => state.PriorityReducer);
 
-  console.log("taskDetailModel", taskDetailModel);
+  const { projectDetail } = useSelector((state) => state.ProjectReducer);
+
+  const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
+
+  const [visibleEditor, setVisibleEditor] = useState(false);
+
+  const [valueDesc, setValueDesc] = useState("");
+
+  const [historyContent, setHistoryContent] = useState(
+    taskDetailModel.description
+  );
+  const [content, setContent] = useState(taskDetailModel.description);
+
+  // console.log("taskDetailModel", taskDetailModel);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setValueDesc(taskDetailModel.description);
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: GET_ALL_STATUS_SAGA });
+    dispatch({ type: GET_ALL_TASK_TYPE_SAGA });
   }, []);
 
   const renderDesctiption = () => {
-    return (
+    const jsxDescription = (
       <td dangerouslySetInnerHTML={{ __html: taskDetailModel.description }} />
     );
+
+    return (
+      <div>
+        {visibleEditor ? (
+          <div>
+            <Editor
+              // apiKey="your-api-key"
+              // onInit={(evt, editor) => (editorRef.current = editor)}
+              name="description"
+              initialValue={taskDetailModel.description}
+              init={{
+                height: 500,
+                menubar: false,
+                plugins: [
+                  "advlist",
+                  "autolink",
+                  "lists",
+                  "link",
+                  "image",
+                  "charmap",
+                  "preview",
+                  "anchor",
+                  "searchreplace",
+                  "visualblocks",
+                  "code",
+                  "fullscreen",
+                  "insertdatetime",
+                  "media",
+                  "table",
+                  "code",
+                  "help",
+                  "wordcount",
+                ],
+                toolbar:
+                  "undo redo | blocks | " +
+                  "bold italic forecolor | alignleft aligncenter " +
+                  "alignright alignjustify | bullist numlist outdent indent | " +
+                  "removeformat | help",
+                content_style:
+                  "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+              }}
+              onEditorChange={(content, editor) => {
+                // setFieldValue("description", content); //hàm của formik
+                setContent(content);
+              }}
+            />
+            <button
+              className="btn btn-outline-secondary m-2"
+              onClick={() => {
+                dispatch({
+                  type: CHANGE_TASK_MODAL,
+                  name: "description",
+                  value: content,
+                });
+                setVisibleEditor(false);
+              }}
+            >
+              Save
+            </button>
+            <button
+              className="btn btn-outline-secondary m-2"
+              onClick={() => {
+                setHistoryContent(taskDetailModel.description);
+                setVisibleEditor(false);
+              }}
+            >
+              Close
+            </button>
+          </div>
+        ) : (
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => {
+              setVisibleEditor(!visibleEditor);
+            }}
+          >
+            {" "}
+            {jsxDescription}
+          </div>
+        )}
+      </div>
+    );
+  };
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    dispatch({
+      type: CHANGE_TASK_MODAL,
+      name,
+      value,
+    });
   };
 
   const renderTimeTracking = () => {
@@ -55,6 +171,24 @@ export default function ModalJira(props) {
           <p className="estimate-time">
             {Number(timeTrackingRemaining)}h remaining
           </p>
+        </div>
+        <div className="row">
+          <div className="col-6">
+            <input
+              className="form-control"
+              type="number"
+              name="timeTrackingSpent"
+              onChange={handleChange}
+            />
+          </div>
+          <div className="col-6">
+            <input
+              className="form-control"
+              type="number"
+              name="timeTrackingRemaining"
+              onChange={handleChange}
+            />
+          </div>
         </div>
       </>
     );
@@ -116,7 +250,19 @@ export default function ModalJira(props) {
             <div className="modal-header">
               <div className="task-title">
                 <i className="fa fa-bookmark" />
-                <span>{taskDetailModel.taskName}</span>
+                <select
+                  onChange={handleChange}
+                  name="typeId"
+                  value={taskDetailModel.typeId}
+                >
+                  {arrTaskType.map((tp, index) => {
+                    return (
+                      <option key={index} value={tp.id}>
+                        {tp.taskType}
+                      </option>
+                    );
+                  })}
+                </select>
               </div>
               <div style={{ display: "flex" }} className="task-click">
                 <div>
@@ -142,7 +288,7 @@ export default function ModalJira(props) {
               <div className="container-fluid">
                 <div className="row">
                   <div className="col-8">
-                    <p className="issue">This is an issue of type: Task.</p>
+                    <p className="issue">{taskDetailModel.taskName}</p>
                     <div className="description">
                       <p>Description</p>
                       {renderDesctiption()}
@@ -218,20 +364,22 @@ export default function ModalJira(props) {
                     <div className="status">
                       <h6>STATUS</h6>
                       <select
+                        name="statusId"
                         className="custom-select"
                         value={taskDetailModel.statusId}
                         onChange={(e) => {
                           {
-                            const action = {
-                              type: UPDATE_STATUS_TASK_SAGA,
-                              taskStatusUpdate: {
-                                taskId: taskDetailModel.taskId,
-                                statusId: e.target.value,
-                                projectId: taskDetailModel.projectId,
-                              },
-                            };
+                            handleChange(e);
+                            // const action = {
+                            //   type: UPDATE_STATUS_TASK_SAGA,
+                            //   taskStatusUpdate: {
+                            //     taskId: taskDetailModel.taskId,
+                            //     statusId: e.target.value,
+                            //     projectId: taskDetailModel.projectId,
+                            //   },
+                            // };
 
-                            dispatch(action);
+                            // dispatch(action);
                           }
                         }}
                       >
@@ -246,31 +394,76 @@ export default function ModalJira(props) {
                     </div>
                     <div className="assignees">
                       <h6>ASSIGNEES</h6>
-                      <div style={{ display: "flex" }}>
+                      <div className="row">
                         {taskDetailModel.assigness.map((user, index) => {
                           return (
-                            <div
-                              key={index}
-                              style={{ display: "flex", fontSize: "12px" }}
-                              className="item"
-                            >
-                              <div className="avatar mr-2">
-                                <img src={user.avatar} alt />
-                              </div>
-                              <div className="name mt-1">
-                                {user.name}
-                                <i
-                                  className="fa fa-times"
-                                  style={{ marginLeft: 5 }}
-                                />
+                            <div key={index} className="col-6">
+                              <div
+                                className="item mb-2 mt-2"
+                                style={{
+                                  display: "flex",
+                                  fontSize: "12px",
+                                  width: "100%",
+                                }}
+                              >
+                                <div className="avatar mr-2 ">
+                                  <img src={user.avatar} alt />
+                                </div>
+                                <div className="name mt-1">
+                                  {user.name}
+                                  <i
+                                    className="fa fa-times"
+                                    style={{ marginLeft: 5, cursor: "pointer" }}
+                                    onClick={() => {
+                                      dispatch({
+                                        type: REMOVE_USER_ASSIGNESS,
+                                        userId: user.id,
+                                      });
+                                    }}
+                                  />
+                                </div>
                               </div>
                             </div>
                           );
                         })}
                       </div>
-                      <div style={{ display: "flex", alignItems: "center" }}>
-                        <i className="fa fa-plus" style={{ marginRight: 5 }} />
-                        <span>Add more</span>
+                      <div className="col-8 mb-2">
+                        <Select
+                          value="+ Add more"
+                          options={projectDetail.members
+                            ?.filter((mem) => {
+                              let index = taskDetailModel.assigness?.findIndex(
+                                (us) => us.id === mem.userId
+                              );
+
+                              if (index !== -1) {
+                                return false;
+                              }
+                              return true;
+                            })
+                            ?.map((mem, index) => {
+                              return { value: mem.userId, label: mem.name };
+                            })}
+                          optionFilterProp="label"
+                          name="lstUser"
+                          style={{
+                            width: "100%",
+                          }}
+                          onSelect={(value) => {
+                            let userSelect = projectDetail.members.find(
+                              (mem) => mem.userId == value
+                            );
+                            let userSelected = {
+                              ...userSelect,
+                              id: userSelect.userId,
+                            };
+                            //dispatch reducer
+                            dispatch({
+                              type: CHANGE_ASSIGNESS,
+                              userSelected,
+                            });
+                          }}
+                        ></Select>
                       </div>
                     </div>
                     {/* <div className="reporter">
@@ -294,8 +487,12 @@ export default function ModalJira(props) {
                     <div className="priority" style={{ marginBottom: 20 }}>
                       <h6>PRIORITY</h6>
                       <select
+                        name="priorityId"
                         className="form-control"
-                        value={taskDetailModel.priorityTask?.priorityId}
+                        value={taskDetailModel.priorityId}
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
                       >
                         {arrPriority.map((priority, index) => {
                           return (
@@ -309,6 +506,10 @@ export default function ModalJira(props) {
                     <div className="estimate">
                       <h6>ORIGINAL ESTIMATE (HOURS)</h6>
                       <input
+                        onChange={(e) => {
+                          handleChange(e);
+                        }}
+                        name="originalEstimate"
                         type="text"
                         className="estimate-hours"
                         value={taskDetailModel.originalEstimate}

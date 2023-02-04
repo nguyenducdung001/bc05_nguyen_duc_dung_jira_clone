@@ -1,4 +1,9 @@
-import { GET_TASK_DETAIL } from "../constant/TaskConstants";
+import {
+  CHANGE_ASSIGNESS,
+  CHANGE_TASK_MODAL,
+  GET_TASK_DETAIL,
+  REMOVE_USER_ASSIGNESS,
+} from "../constant/TaskConstants";
 
 const initialState = {
   taskDetailModel: {
@@ -50,6 +55,29 @@ export const TaskReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_TASK_DETAIL: {
       return { ...state, taskDetailModel: action.taskDetailModel };
+    }
+    case CHANGE_TASK_MODAL: {
+      const { name, value } = action;
+      console.log(state.taskDetailModel);
+      return {
+        ...state,
+        taskDetailModel: { ...state.taskDetailModel, [name]: value },
+      };
+    }
+    case CHANGE_ASSIGNESS: {
+      state.taskDetailModel.assigness = [
+        ...state.taskDetailModel.assigness,
+        action.userSelected,
+      ];
+      return { ...state };
+    }
+    case REMOVE_USER_ASSIGNESS: {
+      state.taskDetailModel.assigness = [
+        ...state.taskDetailModel.assigness.filter(
+          (us) => us.id !== action.userId
+        ),
+      ];
+      return { ...state };
     }
     default:
       return { ...state };

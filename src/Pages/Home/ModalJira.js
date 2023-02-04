@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { GET_ALL_PRIORITY_SAGA } from "../../redux/constant/PriorityConstant";
 import { GET_ALL_STATUS_SAGA } from "../../redux/constant/StatusConstant";
+import { UPDATE_STATUS_TASK_SAGA } from "../../redux/constant/TaskConstants";
 
 export default function ModalJira(props) {
   const { taskDetailModel } = useSelector((state) => state.TaskReducer);
@@ -219,6 +220,20 @@ export default function ModalJira(props) {
                       <select
                         className="custom-select"
                         value={taskDetailModel.statusId}
+                        onChange={(e) => {
+                          {
+                            const action = {
+                              type: UPDATE_STATUS_TASK_SAGA,
+                              taskStatusUpdate: {
+                                taskId: taskDetailModel.taskId,
+                                statusId: e.target.value,
+                                projectId: taskDetailModel.projectId,
+                              },
+                            };
+
+                            dispatch(action);
+                          }
+                        }}
                       >
                         {arrStatus.map((status, index) => {
                           return (

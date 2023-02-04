@@ -3,7 +3,12 @@ import { call, delay, put, takeLatest } from "redux-saga/effects";
 import { CLOSE_DRAWER, GET_LIST_PROJECT } from "../constant/jiraConstant";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../constant/LoadingConst";
 import { notiFunction } from "./../../util/Notification/NotificationJira";
-import { CREATE_TASK, CREATE_TASK_SAGA } from "../constant/TaskConstants";
+import {
+  CREATE_TASK,
+  CREATE_TASK_SAGA,
+  GET_TASK_DETAIL,
+  GET_TASK_DETAIL_SAGA,
+} from "../constant/TaskConstants";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
 import { taskService } from "../../services/TaskService";
 
@@ -40,4 +45,28 @@ function* createTaskSaga(action) {
 
 export function* followCreateTaskSaga() {
   yield takeLatest(CREATE_TASK_SAGA, createTaskSaga);
+}
+
+// ---getTaskDetail
+
+function* getTaskDetailSaga(action) {
+  const { taskId } = action;
+
+  try {
+    const { data, status } = yield call(() =>
+      taskService.getTaskDetail(taskId)
+    );
+
+    yield put({
+      type: GET_TASK_DETAIL,
+      taskDetailModel: data.content,
+    });
+  } catch (err) {
+    console.log(err);
+    console.log(err.respone?.data);
+  }
+}
+
+export function* followGetTaskDetailSaga() {
+  yield takeLatest(GET_TASK_DETAIL_SAGA, getTaskDetailSaga);
 }

@@ -26,7 +26,7 @@ import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement/Proje
 
 import DrawerJira from "./HOC/DrawerJira";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
-import IndexJira from "./IndexJira/IndexJira";
+import IndexJira from "./ProjectDetail/IndexJira";
 
 // Dùng để phân component
 export const history = createBrowserHistory();

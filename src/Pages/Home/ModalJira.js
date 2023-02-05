@@ -5,6 +5,7 @@ import { GET_ALL_STATUS_SAGA } from "../../redux/constant/StatusConstant";
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
+  HANDLE_CHANGE_POST_API_SAGA,
   REMOVE_USER_ASSIGNESS,
   UPDATE_STATUS_TASK_SAGA,
 } from "../../redux/constant/TaskConstants";
@@ -99,10 +100,17 @@ export default function ModalJira(props) {
               className="btn btn-outline-secondary m-2"
               onClick={() => {
                 dispatch({
-                  type: CHANGE_TASK_MODAL,
+                  type: HANDLE_CHANGE_POST_API_SAGA,
+                  actionType: CHANGE_TASK_MODAL,
                   name: "description",
                   value: content,
                 });
+
+                // dispatch({
+                //   type: CHANGE_TASK_MODAL,
+                //   name: "description",
+                //   value: content,
+                // });
                 setVisibleEditor(false);
               }}
             >
@@ -111,6 +119,12 @@ export default function ModalJira(props) {
             <button
               className="btn btn-outline-secondary m-2"
               onClick={() => {
+                // dispatch({
+                //   type: HANDLE_CHANGE_POST_API_SAGA,
+                //   actionType: CHANGE_TASK_MODAL,
+                //   name: "description",
+                //   value: historyContent,
+                // });
                 setHistoryContent(taskDetailModel.description);
                 setVisibleEditor(false);
               }}
@@ -135,11 +149,19 @@ export default function ModalJira(props) {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
+
     dispatch({
-      type: CHANGE_TASK_MODAL,
+      type: HANDLE_CHANGE_POST_API_SAGA,
+      actionType: CHANGE_TASK_MODAL,
       name,
       value,
     });
+
+    // dispatch({
+    //   type: CHANGE_TASK_MODAL,
+    //   name,
+    //   value,
+    // });
   };
 
   const renderTimeTracking = () => {
@@ -416,9 +438,15 @@ export default function ModalJira(props) {
                                     style={{ marginLeft: 5, cursor: "pointer" }}
                                     onClick={() => {
                                       dispatch({
-                                        type: REMOVE_USER_ASSIGNESS,
+                                        type: HANDLE_CHANGE_POST_API_SAGA,
+                                        actionType: REMOVE_USER_ASSIGNESS,
                                         userId: user.id,
                                       });
+
+                                      // dispatch({
+                                      //   type: REMOVE_USER_ASSIGNESS,
+                                      //   userId: user.id,
+                                      // });
                                     }}
                                   />
                                 </div>
@@ -457,11 +485,18 @@ export default function ModalJira(props) {
                               ...userSelect,
                               id: userSelect.userId,
                             };
-                            //dispatch reducer
+
                             dispatch({
-                              type: CHANGE_ASSIGNESS,
+                              type: HANDLE_CHANGE_POST_API_SAGA,
+                              actionType: CHANGE_ASSIGNESS,
                               userSelected,
                             });
+
+                            //dispatch reducer
+                            // dispatch({
+                            //   type: CHANGE_ASSIGNESS,
+                            //   userSelected,
+                            // });
                           }}
                         ></Select>
                       </div>

@@ -29,6 +29,7 @@ export function* rootSaga() {
     TaskSaga.followUpdateStatusSaga(),
     TaskSaga.followUpdateTaskSaga(),
     TaskSaga.followHandleChangePostApi(),
+    TaskSaga.followDeleteTaskSaga(),
     StatusSaga.followGetAllStatusSaga(),
   ]);
 }

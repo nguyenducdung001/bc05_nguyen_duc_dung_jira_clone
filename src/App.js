@@ -27,6 +27,7 @@ import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement/Proje
 import DrawerJira from "./HOC/DrawerJira";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
 import IndexJira from "./ProjectDetail/IndexJira";
+import DemoDragDrop from "./Pages/DemoDragDrop/DemoDragDrop";
 
 // Dùng để phân component
 export const history = createBrowserHistory();
@@ -64,6 +65,7 @@ function App() {
           Component={ProjectManagement}
         />
         <JiraTemplate exact path="/" Component={ProjectManagement} />
+        <HomeTemplate exact path="/dragdrop" Component={DemoDragDrop} />
       </Switch>
     </>
   );

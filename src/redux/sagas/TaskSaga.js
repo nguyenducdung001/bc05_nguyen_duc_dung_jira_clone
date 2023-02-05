@@ -12,6 +12,7 @@ import {
   CHANGE_TASK_MODAL,
   CREATE_TASK,
   CREATE_TASK_SAGA,
+  DELETE_TASK_SAGA,
   GET_TASK_DETAIL,
   GET_TASK_DETAIL_SAGA,
   HANDLE_CHANGE_POST_API_SAGA,
@@ -23,9 +24,12 @@ import { STATUS_CODE } from "../../util/constants/settingSystem";
 import { taskService } from "../../services/TaskService";
 import { PUT_PROJECT_DETAIL } from "./../constant/jiraConstant";
 import { createGlobalStyle } from "styled-components";
+import { notification } from "antd";
 
 function* createTaskSaga(action) {
   // Hiển thị loading
+  // console.log("create", action.taskOject);
+  const { taskOject } = action;
 
   yield put({
     type: DISPLAY_LOADING,
@@ -35,11 +39,15 @@ function* createTaskSaga(action) {
 
   try {
     const { data, status } = yield call(() =>
-      taskService.createTask(action.taskOject)
+      taskService.createTask(taskOject)
     );
     console.log(action);
     if (status === STATUS_CODE.SUCCESS) {
       console.log(data);
+      yield put({
+        type: GET_PROJECT_DETAIL_API,
+        projectId: taskOject.projectId,
+      });
 
       yield put({
         type: CLOSE_DRAWER,
@@ -214,4 +222,37 @@ export function* handleChangePostApi(action) {
 
 export function* followHandleChangePostApi() {
   yield takeLatest(HANDLE_CHANGE_POST_API_SAGA, handleChangePostApi);
+}
+
+// --deleteTask
+
+function* deleteTaskSaga(action) {
+  try {
+    const { task } = action;
+
+    const { data, status } = yield call(() =>
+      taskService.deleteTask(task.taskId)
+    );
+
+    if (status === STATUS_CODE.SUCCESS) {
+      // console.log(data);
+      yield put({
+        type: GET_PROJECT_DETAIL_API,
+        projectId: task.projectId,
+      });
+      // window.location.reload();
+      // yield put({
+      //   type: GET_TASK_DETAIL_SAGA,
+      //   taskId: task.taskId,
+      // });
+      // notification("success", "Delete task successfully");
+    }
+  } catch (err) {
+    console.log(err);
+    console.log(err.response?.data);
+  }
+}
+
+export function* followDeleteTaskSaga() {
+  yield takeLatest(DELETE_TASK_SAGA, deleteTaskSaga);
 }

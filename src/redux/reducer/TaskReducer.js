@@ -1,6 +1,7 @@
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
+  DELETE_TASK,
   GET_TASK_DETAIL,
   REMOVE_USER_ASSIGNESS,
 } from "../constant/TaskConstants";
@@ -79,6 +80,7 @@ export const TaskReducer = (state = initialState, action) => {
       ];
       return { ...state };
     }
+
     default:
       return { ...state };
   }

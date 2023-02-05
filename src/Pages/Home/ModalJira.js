@@ -5,13 +5,14 @@ import { GET_ALL_STATUS_SAGA } from "../../redux/constant/StatusConstant";
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
+  DELETE_TASK_SAGA,
   HANDLE_CHANGE_POST_API_SAGA,
   REMOVE_USER_ASSIGNESS,
   UPDATE_STATUS_TASK_SAGA,
 } from "../../redux/constant/TaskConstants";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstant";
 import { Editor } from "@tinymce/tinymce-react";
-import { Select } from "antd";
+import { Select, Popconfirm, Button } from "antd";
 
 const { option } = Select;
 
@@ -35,7 +36,7 @@ export default function ModalJira(props) {
   );
   const [content, setContent] = useState(taskDetailModel.description);
 
-  // console.log("taskDetailModel", taskDetailModel);
+  console.log("taskDetailModel", taskDetailModel);
 
   const dispatch = useDispatch();
 
@@ -294,8 +295,38 @@ export default function ModalJira(props) {
                 <div>
                   <i className="fa fa-link" />
                   <span style={{ paddingRight: 20 }}>Copy link</span>
+                  {/*  */}
+                  {/* <Popconfirm
+                    style={{ index: "99" }}
+                    placement="top"
+                    title="Are you sure to delete this project?"
+                    description="Delete this project!"
+                    onConfirm={() => {
+                      dispatch({
+                        type: DELETE_TASK_SAGA,
+                        taskId: taskDetailModel.taskId,
+                      });
+                    }}
+                    okText="Yes"
+                    cancelText="No"
+                  >
+                </Popconfirm> */}
+                  {/*  */}
+                  <Button
+                    onClick={() => {
+                      dispatch({
+                        type: DELETE_TASK_SAGA,
+                        task: taskDetailModel,
+                      });
+                    }}
+                  >
+                    <i
+                      className="fa fa-trash-alt"
+                      style={{ cursor: "pointer" }}
+                    />
+                  </Button>
                 </div>
-                <i className="fa fa-trash-alt" style={{ cursor: "pointer" }} />
+
                 <button
                   type="button"
                   className="close"

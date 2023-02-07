@@ -13,6 +13,9 @@ import {
 import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstant";
 import { Editor } from "@tinymce/tinymce-react";
 import { Select, Popconfirm, Button } from "antd";
+// import { type } from "os";
+import { INSERT_COMMENT_SAGA } from "../../redux/constant/CommentConstant";
+import { CLOSING } from "ws";
 
 const { option } = Select;
 
@@ -35,6 +38,8 @@ export default function ModalJira(props) {
     taskDetailModel.description
   );
   const [content, setContent] = useState(taskDetailModel.description);
+
+  const [contentComment, setContentComment] = useState("");
 
   console.log("taskDetailModel", taskDetailModel);
 
@@ -360,25 +365,32 @@ export default function ModalJira(props) {
                           />
                         </div>
                         <div className="input-comment">
-                          <input type="text" placeholder="Add a comment ..." />
-                          <p>
-                            <span style={{ fontWeight: 500, color: "gray" }}>
-                              Protip:
-                            </span>
-                            <span>
-                              press
-                              <span
-                                style={{
-                                  fontWeight: "bold",
-                                  background: "#ecedf0",
-                                  color: "#b4bac6",
-                                }}
-                              >
-                                M
-                              </span>
-                              to comment
-                            </span>
-                          </p>
+                          <input
+                            onChange={(e) => {
+                              // console.log(e.target.value);
+                              setContentComment(e.target.value);
+                            }}
+                            type="text"
+                            name="contentComment"
+                            placeholder="Add comment"
+                          />
+                          <button
+                            className="btn btn-outline-secondary m-2 font-weight-light"
+                            onClick={() => {
+                              dispatch({
+                                type: INSERT_COMMENT_SAGA,
+                                commentContent: {
+                                  taskId: taskDetailModel.taskId,
+                                  contentComment: contentComment,
+                                },
+                              });
+                            }}
+                          >
+                            Save
+                          </button>
+                          <button className="btn btn-outline-secondary m-2 font-weight-light">
+                            Cancle
+                          </button>
                         </div>
                       </div>
                       <div className="lastest-comment">

@@ -6,6 +6,7 @@ import * as TaskTypeSaga from "./sagas/TaskTypeSaga";
 import * as PrioritySaga from "./sagas/PrioritySaga";
 import * as TaskSaga from "./sagas/TaskSaga";
 import * as StatusSaga from "./sagas/StatusSaga";
+import * as CommentSaga from "./sagas/CommentSaga";
 
 export function* rootSaga() {
   yield all([
@@ -31,5 +32,6 @@ export function* rootSaga() {
     TaskSaga.followHandleChangePostApi(),
     TaskSaga.followDeleteTaskSaga(),
     StatusSaga.followGetAllStatusSaga(),
+    CommentSaga.followInsertCommentSaga(),
   ]);
 }

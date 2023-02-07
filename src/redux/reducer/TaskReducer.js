@@ -1,3 +1,4 @@
+import { GET_ALL_COMMENT, INSERT_COMMENT } from "../constant/CommentConstant";
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
@@ -78,6 +79,14 @@ export const TaskReducer = (state = initialState, action) => {
           (us) => us.id !== action.userId
         ),
       ];
+      return { ...state };
+    }
+    case GET_ALL_COMMENT: {
+      state.taskDetailModel.lstComment = action.lstComment;
+      return { ...state };
+    }
+    case INSERT_COMMENT: {
+      console.log("tasRe", action);
       return { ...state };
     }
 

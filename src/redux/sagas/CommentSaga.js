@@ -3,6 +3,7 @@ import { call, delay, put, takeLatest, select } from "redux-saga/effects";
 import { CLOSING } from "ws";
 import { commentService } from "../../services/CommentService";
 import {
+  DELETE_COMMENT_SAGA,
   GET_ALL_COMMENT,
   GET_ALL_COMMENT_SAGA,
   INSERT_COMMENT,
@@ -17,9 +18,9 @@ function* getAllCommentSaga(action) {
     const { data, status } = yield call(() =>
       commentService.getAllComment(taskId)
     );
-    yield put({
-      type: GET_ALL_COMMENT,
-    });
+    // yield put({
+    //   type: GET_ALL_COMMENT,
+    // });
 
     console.log(data);
   } catch (err) {
@@ -35,7 +36,7 @@ export function* followGetAllCommentSaga() {
 // ----insert comment
 
 function* insertCommentSaga(action) {
-  console.log("inserAction", action);
+  // console.log("inserAction", action);
   const { commentContent } = action;
   try {
     const { data, status } = yield call(() =>
@@ -49,7 +50,7 @@ function* insertCommentSaga(action) {
       });
     }
 
-    console.log("insertComment", data);
+    // console.log("insertComment", data);
   } catch (err) {
     console.log(err);
     console.log(err.response?.data);
@@ -58,4 +59,32 @@ function* insertCommentSaga(action) {
 
 export function* followInsertCommentSaga() {
   yield takeLatest(INSERT_COMMENT_SAGA, insertCommentSaga);
+}
+
+// ----delete comment
+
+function* deleteCommentSaga(action) {
+  console.log("dele", action);
+  const { idComment } = action;
+  try {
+    const { data, status } = yield call(() =>
+      commentService.deleteComment(idComment)
+    );
+
+    if (status === STATUS_CODE.SUCCESS) {
+      // yield put({
+      //   type: INSERT_COMMENT,
+      //   commentContent: data.content,
+      // });
+    }
+
+    console.log("delete", data);
+  } catch (err) {
+    console.log(err);
+    console.log(err.response?.data);
+  }
+}
+
+export function* followDeleteCommentSaga() {
+  yield takeLatest(DELETE_COMMENT_SAGA, deleteCommentSaga);
 }

@@ -81,12 +81,12 @@ export const TaskReducer = (state = initialState, action) => {
       ];
       return { ...state };
     }
-    case GET_ALL_COMMENT: {
-      state.taskDetailModel.lstComment = action.lstComment;
-      return { ...state };
-    }
+    // case GET_ALL_COMMENT: {
+    //   state.taskDetailModel.lstComment = action.lstComment;
+    //   return { ...state };
+    // }
     case INSERT_COMMENT: {
-      console.log("tasRe", action);
+      // console.log("tasRe", action);
       return { ...state };
     }
 

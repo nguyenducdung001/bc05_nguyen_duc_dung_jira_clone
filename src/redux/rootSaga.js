@@ -33,5 +33,7 @@ export function* rootSaga() {
     TaskSaga.followDeleteTaskSaga(),
     StatusSaga.followGetAllStatusSaga(),
     CommentSaga.followInsertCommentSaga(),
+    CommentSaga.followGetAllCommentSaga(),
+    CommentSaga.followDeleteCommentSaga(),
   ]);
 }

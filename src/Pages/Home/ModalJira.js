@@ -14,7 +14,10 @@ import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstant";
 import { Editor } from "@tinymce/tinymce-react";
 import { Select, Popconfirm, Button } from "antd";
 // import { type } from "os";
-import { INSERT_COMMENT_SAGA } from "../../redux/constant/CommentConstant";
+import {
+  DELETE_COMMENT_SAGA,
+  INSERT_COMMENT_SAGA,
+} from "../../redux/constant/CommentConstant";
 import { CLOSING } from "ws";
 
 const { option } = Select;
@@ -365,7 +368,7 @@ export default function ModalJira(props) {
                           />
                         </div>
                         <div className="input-comment">
-                          <input
+                          {/* <input
                             onChange={(e) => {
                               // console.log(e.target.value);
                               setContentComment(e.target.value);
@@ -373,6 +376,47 @@ export default function ModalJira(props) {
                             type="text"
                             name="contentComment"
                             placeholder="Add comment"
+                          /> */}
+                          <Editor
+                            // apiKey="your-api-key"
+                            // onInit={(evt, editor) => (editorRef.current = editor)}
+                            name="contentComment"
+                            initialValue=""
+                            init={{
+                              height: 500,
+                              menubar: false,
+                              plugins: [
+                                "advlist",
+                                "autolink",
+                                "lists",
+                                "link",
+                                "image",
+                                "charmap",
+                                "preview",
+                                "anchor",
+                                "searchreplace",
+                                "visualblocks",
+                                "code",
+                                "fullscreen",
+                                "insertdatetime",
+                                "media",
+                                "table",
+                                "code",
+                                "help",
+                                "wordcount",
+                              ],
+                              toolbar:
+                                "undo redo | blocks | " +
+                                "bold italic forecolor | alignleft aligncenter " +
+                                "alignright alignjustify | bullist numlist outdent indent | " +
+                                "removeformat | help",
+                              content_style:
+                                "body { font-family:Helvetica,Arial,sans-serif; font-size:14px }",
+                            }}
+                            onEditorChange={(content, editor) => {
+                              // setFieldValue("description", content); //hàm của formik
+                              setContentComment(content);
+                            }}
                           />
                           <button
                             className="btn btn-outline-secondary m-2 font-weight-light"
@@ -388,38 +432,70 @@ export default function ModalJira(props) {
                           >
                             Save
                           </button>
-                          <button className="btn btn-outline-secondary m-2 font-weight-light">
+                          <button
+                            onClick={() => {}}
+                            className="btn btn-outline-secondary m-2 font-weight-light"
+                          >
                             Cancle
                           </button>
                         </div>
                       </div>
                       <div className="lastest-comment">
                         <div className="comment-item">
-                          <div
-                            className="display-comment"
-                            style={{ display: "flex" }}
-                          >
-                            <div className="avatar">
-                              <img
-                                src={require("../../assets/img/download (1).jfif")}
-                                alt
-                              />
-                            </div>
-                            <div>
-                              <p style={{ marginBottom: 5 }}>
-                                Lord Gaben <span>a month ago</span>
-                              </p>
-                              <p style={{ marginBottom: 5 }}>
-                                Lorem ipsum dolor sit amet, consectetur
-                                adipisicing elit. Repellendus tempora ex
-                                voluptatum saepe ab officiis alias totam ad
-                                accusamus molestiae?
-                              </p>
-                              <div>
-                                <span style={{ color: "#929398" }}>Edit</span>•
-                                <span style={{ color: "#929398" }}>Delete</span>
-                              </div>
-                            </div>
+                          <div className="display-comment">
+                            {taskDetailModel.lstComment.map((list, index) => {
+                              return (
+                                <div key={index} style={{ display: "flex" }}>
+                                  <div
+                                    className="avatar"
+                                    style={{ fontSize: "10px" }}
+                                  >
+                                    <img
+                                      style={{ fontSize: "10px" }}
+                                      src={list.avatar}
+                                      alt
+                                    />
+                                  </div>
+
+                                  <div>
+                                    <div>{list.name}</div>
+                                    <div
+                                      dangerouslySetInnerHTML={{
+                                        __html: list.commentContent,
+                                      }}
+                                    />
+
+                                    <div>
+                                      <span
+                                        style={{
+                                          color: "#929398",
+                                          fontSize: "14px",
+                                          cursor: "pointer",
+                                        }}
+                                      >
+                                        Edit
+                                      </span>
+                                      ----
+                                      <span
+                                        style={{
+                                          color: "#929398",
+                                          fontSize: "14px",
+                                          cursor: "pointer",
+                                        }}
+                                        onClick={() => {
+                                          dispatch({
+                                            type: DELETE_COMMENT_SAGA,
+                                            idComment: list.id,
+                                          });
+                                        }}
+                                      >
+                                        Delete
+                                      </span>
+                                    </div>
+                                  </div>
+                                </div>
+                              );
+                            })}
                           </div>
                         </div>
                       </div>

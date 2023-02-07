@@ -76,7 +76,7 @@ function* getTaskDetailSaga(action) {
     const { data, status } = yield call(() =>
       taskService.getTaskDetail(taskId)
     );
-
+    // console.log("getdetail", data);
     yield put({
       type: GET_TASK_DETAIL,
       taskDetailModel: data.content,
@@ -244,7 +244,7 @@ function* deleteTaskSaga(action) {
       //   type: GET_TASK_DETAIL_SAGA,
       //   taskId: task.taskId,
       // });
-      // notification("success", "Delete task successfully");
+      notiFunction("success", "Delete task successfully");
     }
   } catch (err) {
     console.log(err);

@@ -9,7 +9,10 @@ import {
   INSERT_COMMENT,
   INSERT_COMMENT_SAGA,
 } from "../constant/CommentConstant";
+import { GET_TASK_DETAIL_SAGA } from "../constant/TaskConstants";
 import { STATUS_CODE } from "./../../util/constants/settingSystem";
+import { notification } from "antd";
+import { notiFunction } from "./../../util/Notification/NotificationJira";
 
 // ---get all comment
 function* getAllCommentSaga(action) {
@@ -19,7 +22,7 @@ function* getAllCommentSaga(action) {
       commentService.getAllComment(taskId)
     );
     // yield put({
-    //   type: GET_ALL_COMMENT,
+    //   type: GET_TASK_DETAIL_SAGA,
     // });
 
     console.log(data);
@@ -36,7 +39,7 @@ export function* followGetAllCommentSaga() {
 // ----insert comment
 
 function* insertCommentSaga(action) {
-  // console.log("inserAction", action);
+  console.log("inserAction", action);
   const { commentContent } = action;
   try {
     const { data, status } = yield call(() =>
@@ -47,6 +50,17 @@ function* insertCommentSaga(action) {
       yield put({
         type: INSERT_COMMENT,
         commentContent: data.content,
+      });
+      console.log("insert", data);
+
+      yield put({
+        type: GET_ALL_COMMENT_SAGA,
+        taskId: data.content.taskId,
+      });
+
+      yield put({
+        type: GET_TASK_DETAIL_SAGA,
+        taskId: data.content.taskId,
       });
     }
 
@@ -64,21 +78,27 @@ export function* followInsertCommentSaga() {
 // ----delete comment
 
 function* deleteCommentSaga(action) {
-  console.log("dele", action);
-  const { idComment } = action;
+  // console.log("dele", action);
+  const { comment } = action;
+  //
   try {
     const { data, status } = yield call(() =>
-      commentService.deleteComment(idComment)
+      commentService.deleteComment(comment.idComment)
     );
 
     if (status === STATUS_CODE.SUCCESS) {
+      // const { taskId, idComment } = comment;
+      notiFunction("success", "Delete comment successfully");
+      // console.log("delete", data);
       // yield put({
-      //   type: INSERT_COMMENT,
-      //   commentContent: data.content,
+      //   type: GET_ALL_COMMENT_SAGA,
+      //   taskId: taskId,
+      // });
+      // yield put({
+      //   type: GET_TASK_DETAIL_SAGA,
+      //   taskId: taskId,
       // });
     }
-
-    console.log("delete", data);
   } catch (err) {
     console.log(err);
     console.log(err.response?.data);

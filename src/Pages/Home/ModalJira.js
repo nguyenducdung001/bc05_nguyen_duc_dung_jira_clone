@@ -13,12 +13,14 @@ import {
 import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstant";
 import { Editor } from "@tinymce/tinymce-react";
 import { Select, Popconfirm, Button } from "antd";
+import { ToolOutlined } from "@ant-design/icons";
 // import { type } from "os";
 import {
   DELETE_COMMENT_SAGA,
   INSERT_COMMENT_SAGA,
 } from "../../redux/constant/CommentConstant";
 import { CLOSING } from "ws";
+import { GET_ALL_COMMENT_SAGA } from "./../../redux/constant/CommentConstant";
 
 const { option } = Select;
 
@@ -44,15 +46,19 @@ export default function ModalJira(props) {
 
   const [contentComment, setContentComment] = useState("");
 
+  const [idCommentTask, setIdCommentTask] = useState("");
+
   console.log("taskDetailModel", taskDetailModel);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setIdCommentTask(taskDetailModel.taskId);
     setValueDesc(taskDetailModel.description);
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: GET_ALL_STATUS_SAGA });
     dispatch({ type: GET_ALL_TASK_TYPE_SAGA });
+    dispatch({ type: GET_ALL_COMMENT_SAGA });
   }, []);
 
   const renderDesctiption = () => {
@@ -362,10 +368,7 @@ export default function ModalJira(props) {
                         style={{ display: "flex" }}
                       >
                         <div className="avatar">
-                          <img
-                            src={require("../../assets/img/download (1).jfif")}
-                            alt
-                          />
+                          <img src={taskDetailModel.lstComment.avatar} alt />
                         </div>
                         <div className="input-comment">
                           {/* <input
@@ -458,8 +461,11 @@ export default function ModalJira(props) {
                                   </div>
 
                                   <div>
-                                    <div>{list.name}</div>
+                                    <div style={{ fontSize: "20px" }}>
+                                      {list.name}
+                                    </div>
                                     <div
+                                      className="font-italic"
                                       dangerouslySetInnerHTML={{
                                         __html: list.commentContent,
                                       }}
@@ -468,9 +474,10 @@ export default function ModalJira(props) {
                                     <div>
                                       <span
                                         style={{
-                                          color: "#929398",
+                                          color: "black",
                                           fontSize: "14px",
                                           cursor: "pointer",
+                                          fontWeight: "bold",
                                         }}
                                       >
                                         Edit
@@ -478,14 +485,18 @@ export default function ModalJira(props) {
                                       ----
                                       <span
                                         style={{
-                                          color: "#929398",
+                                          color: "red",
                                           fontSize: "14px",
                                           cursor: "pointer",
+                                          fontWeight: "bold",
                                         }}
                                         onClick={() => {
                                           dispatch({
                                             type: DELETE_COMMENT_SAGA,
-                                            idComment: list.id,
+                                            comment: {
+                                              taskId: idCommentTask,
+                                              idComment: list.id,
+                                            },
                                           });
                                         }}
                                       >

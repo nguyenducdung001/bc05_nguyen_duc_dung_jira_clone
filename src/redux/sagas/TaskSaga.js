@@ -106,7 +106,6 @@ function* updateTaskStatusSaga(action) {
         type: GET_PROJECT_DETAIL_API,
         projectId: taskStatusUpdate.projectId,
       });
-
       yield put({
         type: GET_TASK_DETAIL_SAGA,
         taskId: taskStatusUpdate.taskId,

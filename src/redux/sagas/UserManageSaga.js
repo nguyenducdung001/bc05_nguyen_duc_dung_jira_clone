@@ -10,6 +10,7 @@ import { userService } from "../../services/userService";
 import { STATUS_CODE } from "../../util/constants/settingSystem";
 import { DISPLAY_LOADING, HIDE_LOADING } from "../constant/LoadingConst";
 import { notiFunction } from "./../../util/Notification/NotificationJira";
+import { CLOSE_DRAWER } from "../constant/jiraConstant";
 
 // ---get list user
 function* getListUserSaga(action) {
@@ -48,10 +49,12 @@ function* updateUserSaga(action) {
     if (status === STATUS_CODE.SUCCESS) {
       console.log("updateUser", data);
 
-      // yield put({
-      //   type: GET_LIST_USER,
-
-      // });
+      yield put({
+        type: GET_LIST_USER_SAGA,
+      });
+      yield put({
+        type: CLOSE_DRAWER,
+      });
       notiFunction("success", "Update user successfully!");
     }
   } catch (err) {
@@ -83,10 +86,9 @@ function* deleteUserSaga(action) {
     if (status === STATUS_CODE.SUCCESS) {
       console.log("deleteAction", data);
 
-      // yield put({
-      //   type: GET_LIST_USER,
-
-      // });
+      yield put({
+        type: GET_LIST_USER_SAGA,
+      });
       notiFunction("success", "Delete user successfully!");
     }
   } catch (err) {

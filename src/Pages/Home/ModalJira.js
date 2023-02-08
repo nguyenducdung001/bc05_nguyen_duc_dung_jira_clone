@@ -392,7 +392,7 @@ export default function ModalJira(props) {
                             // onInit={(evt, editor) => (editorRef.current = editor)}
                             name="contentComment"
                             initialValue={editComment.contentComment}
-                            // value={editComment}
+                            value={contentComment}
                             init={{
                               height: 500,
                               menubar: false,
@@ -439,6 +439,7 @@ export default function ModalJira(props) {
                                   contentComment: contentComment,
                                 },
                               });
+                              setContentComment("");
                             }}
                           >
                             Create
@@ -528,7 +529,7 @@ export default function ModalJira(props) {
                                           dispatch({
                                             type: DELETE_COMMENT_SAGA,
                                             comment: {
-                                              taskId: idCommentTask,
+                                              taskId: taskDetailModel.taskId,
                                               idComment: list.id,
                                             },
                                           });

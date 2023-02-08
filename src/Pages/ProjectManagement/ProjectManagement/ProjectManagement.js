@@ -73,7 +73,7 @@ export default function ProjectManagement(props) {
       dataIndex: "id",
       key: "id",
       sorter: (a, b) => a.id - b.id,
-      // sortDirections: ["descend"],
+      sortDirections: ["descend"],
     },
     {
       title: "Project Name",

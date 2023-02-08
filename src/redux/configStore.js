@@ -17,6 +17,7 @@ import { TaskTypeReducer } from "./reducer/TaskTypeReducer";
 import { PriorityReducer } from "./reducer/PriorityReducer";
 import { StatusReducer } from "./reducer/StatusReducer";
 import { TaskReducer } from "./reducer/TaskReducer";
+import { CommentReducer } from "./reducer/CommentReducer";
 
 const middleWareSaga = createSagaMiddleware();
 
@@ -34,6 +35,7 @@ const rootReducer = combineReducers({
   PriorityReducer,
   StatusReducer,
   TaskReducer,
+  CommentReducer,
 });
 
 const store = createStore(rootReducer, applyMiddleware(thunk, middleWareSaga));

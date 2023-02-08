@@ -17,7 +17,9 @@ import { ToolOutlined } from "@ant-design/icons";
 // import { type } from "os";
 import {
   DELETE_COMMENT_SAGA,
+  EDIT_COMMENT,
   INSERT_COMMENT_SAGA,
+  UPDATE_COMMENT_SAGA,
 } from "../../redux/constant/CommentConstant";
 import { CLOSING } from "ws";
 import { GET_ALL_COMMENT_SAGA } from "./../../redux/constant/CommentConstant";
@@ -35,6 +37,8 @@ export default function ModalJira(props) {
 
   const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
 
+  const { editComment } = useSelector((state) => state.TaskReducer);
+
   const [visibleEditor, setVisibleEditor] = useState(false);
 
   const [valueDesc, setValueDesc] = useState("");
@@ -48,11 +52,14 @@ export default function ModalJira(props) {
 
   const [idCommentTask, setIdCommentTask] = useState("");
 
+  const [detailTask, setDetailTask] = useState(taskDetailModel);
+
   console.log("taskDetailModel", taskDetailModel);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
+    setDetailTask(taskDetailModel);
     setIdCommentTask(taskDetailModel.taskId);
     setValueDesc(taskDetailModel.description);
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
@@ -384,7 +391,8 @@ export default function ModalJira(props) {
                             // apiKey="your-api-key"
                             // onInit={(evt, editor) => (editorRef.current = editor)}
                             name="contentComment"
-                            initialValue=""
+                            initialValue={editComment.contentComment}
+                            // value={editComment}
                             init={{
                               height: 500,
                               menubar: false,
@@ -433,13 +441,29 @@ export default function ModalJira(props) {
                               });
                             }}
                           >
-                            Save
+                            Create
                           </button>
                           <button
                             onClick={() => {}}
                             className="btn btn-outline-secondary m-2 font-weight-light"
                           >
                             Cancle
+                          </button>
+                          <button
+                            onClick={() => {
+                              dispatch({
+                                type: UPDATE_COMMENT_SAGA,
+                                updateComment: {
+                                  id: editComment.id,
+                                  contentComment: contentComment,
+                                },
+                              });
+                              // console.log("id", editComment.id);
+                              // console.log("contentComment", contentComment);
+                            }}
+                            className="btn btn-outline-secondary m-2 font-weight-light"
+                          >
+                            Update
                           </button>
                         </div>
                       </div>
@@ -478,6 +502,18 @@ export default function ModalJira(props) {
                                           fontSize: "14px",
                                           cursor: "pointer",
                                           fontWeight: "bold",
+                                        }}
+                                        onClick={() => {
+                                          dispatch({
+                                            type: EDIT_COMMENT,
+                                            editComment: {
+                                              id: list.id,
+                                              userId: list.idUser,
+                                              contentComment:
+                                                list.commentContent,
+                                              taskId: detailTask.taskId,
+                                            },
+                                          });
                                         }}
                                       >
                                         Edit

@@ -35,5 +35,6 @@ export function* rootSaga() {
     CommentSaga.followInsertCommentSaga(),
     CommentSaga.followGetAllCommentSaga(),
     CommentSaga.followDeleteCommentSaga(),
+    CommentSaga.followUpdateCommentSaga(),
   ]);
 }

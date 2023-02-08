@@ -8,6 +8,7 @@ import {
   GET_ALL_COMMENT_SAGA,
   INSERT_COMMENT,
   INSERT_COMMENT_SAGA,
+  UPDATE_COMMENT_SAGA,
 } from "../constant/CommentConstant";
 import { GET_TASK_DETAIL_SAGA } from "../constant/TaskConstants";
 import { STATUS_CODE } from "./../../util/constants/settingSystem";
@@ -107,4 +108,38 @@ function* deleteCommentSaga(action) {
 
 export function* followDeleteCommentSaga() {
   yield takeLatest(DELETE_COMMENT_SAGA, deleteCommentSaga);
+}
+
+// ----update comment
+
+function* updateCommentSaga(action) {
+  console.log("updateAction", action);
+  const { updateComment } = action;
+  //
+  try {
+    const { data, status } = yield call(() =>
+      commentService.updateComment(updateComment)
+    );
+
+    if (status === STATUS_CODE.SUCCESS) {
+      // const { taskId, idComment } = comment;
+      // notiFunction("success", "Delete comment successfully");
+      console.log("updateData", data);
+      yield put({
+        type: GET_ALL_COMMENT_SAGA,
+        taskId: data.content.taskId,
+      });
+      yield put({
+        type: GET_TASK_DETAIL_SAGA,
+        taskId: data.content.taskId,
+      });
+    }
+  } catch (err) {
+    console.log(err);
+    console.log(err.response?.data);
+  }
+}
+
+export function* followUpdateCommentSaga() {
+  yield takeLatest(UPDATE_COMMENT_SAGA, updateCommentSaga);
 }

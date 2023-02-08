@@ -1,4 +1,8 @@
-import { GET_ALL_COMMENT, INSERT_COMMENT } from "../constant/CommentConstant";
+import {
+  EDIT_COMMENT,
+  GET_ALL_COMMENT,
+  INSERT_COMMENT,
+} from "../constant/CommentConstant";
 import {
   CHANGE_ASSIGNESS,
   CHANGE_TASK_MODAL,
@@ -51,6 +55,12 @@ const initialState = {
     priorityId: 1,
     projectId: 10756,
   },
+  editComment: {
+    id: "",
+    userId: "",
+    taskId: "",
+    contentComment: "",
+  },
 };
 
 export const TaskReducer = (state = initialState, action) => {
@@ -88,6 +98,14 @@ export const TaskReducer = (state = initialState, action) => {
     case INSERT_COMMENT: {
       // console.log("tasRe", action);
       return { ...state };
+    }
+    case EDIT_COMMENT: {
+      console.log("editCom", action);
+
+      return {
+        ...state,
+        editComment: action.editComment,
+      };
     }
 
     default:

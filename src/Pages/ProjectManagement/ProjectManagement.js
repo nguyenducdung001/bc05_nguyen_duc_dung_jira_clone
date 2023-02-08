@@ -21,9 +21,9 @@ import {
   OPEN_DRAWER,
   OPEN_FORM_EDIT_PROJECT,
   REMOVE_USER_PROJECT_API,
-} from "../../../redux/constant/jiraConstant";
-import FormEditProject from "../../../components/Forms/FormEditProject/FormEditProject";
-import { EDIT_PROJECT } from "./../../../redux/constant/jiraConstant";
+} from "../../redux/constant/jiraConstant";
+import FormEditProject from "../../components/Forms/FormEditProject/FormEditProject";
+import { EDIT_PROJECT } from "../../redux/constant/jiraConstant";
 import Item from "antd/es/list/Item";
 import { NavLink } from "react-router-dom";
 

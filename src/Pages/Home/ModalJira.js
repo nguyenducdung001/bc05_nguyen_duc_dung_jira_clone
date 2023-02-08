@@ -458,8 +458,6 @@ export default function ModalJira(props) {
                                   contentComment: contentComment,
                                 },
                               });
-                              // console.log("id", editComment.id);
-                              // console.log("contentComment", contentComment);
                             }}
                             className="btn btn-outline-secondary m-2 font-weight-light"
                           >

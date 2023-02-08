@@ -122,8 +122,6 @@ function* updateCommentSaga(action) {
     );
 
     if (status === STATUS_CODE.SUCCESS) {
-      // const { taskId, idComment } = comment;
-      // notiFunction("success", "Delete comment successfully");
       console.log("updateData", data);
       yield put({
         type: GET_ALL_COMMENT_SAGA,

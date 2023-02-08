@@ -7,6 +7,7 @@ import * as PrioritySaga from "./sagas/PrioritySaga";
 import * as TaskSaga from "./sagas/TaskSaga";
 import * as StatusSaga from "./sagas/StatusSaga";
 import * as CommentSaga from "./sagas/CommentSaga";
+import * as UserManageSaga from "./sagas/UserManageSaga";
 
 export function* rootSaga() {
   yield all([
@@ -36,5 +37,8 @@ export function* rootSaga() {
     CommentSaga.followGetAllCommentSaga(),
     CommentSaga.followDeleteCommentSaga(),
     CommentSaga.followUpdateCommentSaga(),
+    UserManageSaga.followGetListUserSaga(),
+    UserManageSaga.followUpdateUserSaga(),
+    UserManageSaga.followDeleteUserSaga(),
   ]);
 }

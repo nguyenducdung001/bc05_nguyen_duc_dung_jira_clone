@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 
 import { userLocaService } from "../../services/localStorageService";
 import { jiraServices } from "./../../services/jiraServices";
+import { history } from "../../util/history/history";
 
 export default function Register(props) {
   let dispatch = useDispatch();
@@ -21,6 +22,8 @@ export default function Register(props) {
       .then((res) => {
         // dispatch(res.data.content);
         console.log(res.data.content);
+        alert("Register successfully!");
+        history.push("/login");
 
         // Lưu vào localStore
         userLocaService.set(res.data.content);

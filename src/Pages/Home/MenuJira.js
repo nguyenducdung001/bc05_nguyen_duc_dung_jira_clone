@@ -49,15 +49,37 @@ export default function MenuJira(props) {
             Create Project
           </NavLink>
         </div>
+        <div>
+          <i class="fa fa-user-cog"></i>
+          <NavLink
+            activeClassName="active font-weight-bold text-dark"
+            style={{ textDecoration: "none" }}
+            to="/usermanagement"
+          >
+            User management
+          </NavLink>
+        </div>
       </div>
       <div className="feature">
         <div>
           <i className="fa fa-truck" />
-          <span>Releases</span>
+          <NavLink
+            activeClassName="active font-weight-bold text-dark"
+            style={{ textDecoration: "none" }}
+            to="/register"
+          >
+            Sign Up
+          </NavLink>
         </div>
         <div>
           <i className="fa fa-equals" />
-          <span>Issues and filters</span>
+          <NavLink
+            activeClassName="active font-weight-bold text-dark"
+            style={{ textDecoration: "none" }}
+            to="/login"
+          >
+            Login
+          </NavLink>
         </div>
         <div>
           <i className="fa fa-paste" />

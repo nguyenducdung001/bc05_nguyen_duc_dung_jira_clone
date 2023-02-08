@@ -22,13 +22,14 @@ import CreateProject from "./Pages/CreateProject/CreateProject";
 import DemoJira from "./DemoJira/DemoJira";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement/ProjectManagement";
+import ProjectManagement from "./Pages/ProjectManagement/ProjectManagement";
 
 import DrawerJira from "./HOC/DrawerJira";
 import LoadingComponent from "./components/GlobalSetting/LoadingComponent/LoadingComponent";
 import IndexJira from "./ProjectDetail/IndexJira";
 
 import DragAndDropDnd from "./Pages/DragAndDropDnD/DragAndDropDnD";
+import UserManagement from "./Pages/UserManagement/UserManagement";
 
 // Dùng để phân component
 export const history = createBrowserHistory();
@@ -66,6 +67,7 @@ function App() {
           Component={ProjectManagement}
         />
         <JiraTemplate exact path="/" Component={ProjectManagement} />
+        <JiraTemplate exact path="/usermanagement" Component={UserManagement} />
         <HomeTemplate exact path="/dragdrop" Component={DragAndDropDnd} />
       </Switch>
     </>

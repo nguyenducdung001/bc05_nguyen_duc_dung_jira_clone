@@ -3,8 +3,9 @@ import { NavLink } from "react-router-dom";
 import "../../index.css";
 
 import MenuJira from "./MenuJira";
-import ModalJira from "./ModalJira";
+
 import SideBarJira from "./SideBarJira";
+import ModalJira from "./ModalJira";
 
 export default function Home(props) {
   return (

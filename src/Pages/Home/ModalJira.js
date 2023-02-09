@@ -52,7 +52,7 @@ export default function ModalJira(props) {
 
   const [detailTask, setDetailTask] = useState(taskDetailModel);
 
-  console.log("taskDetailModel", taskDetailModel);
+  // console.log("taskDetailModel", taskDetailModel);
 
   const dispatch = useDispatch();
 

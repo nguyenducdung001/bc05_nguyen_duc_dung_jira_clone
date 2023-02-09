@@ -22,8 +22,6 @@ function* getAllCommentSaga(action) {
     const { data, status } = yield call(() =>
       commentService.getAllComment(taskId)
     );
-
-    console.log(data);
   } catch (err) {
     console.log(err);
     console.log(err.response?.data);

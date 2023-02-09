@@ -354,7 +354,7 @@ export default function ModalJira(props) {
                             initialValue={editComment.contentComment}
                             value={contentComment}
                             init={{
-                              height: 500,
+                              height: 300,
                               menubar: false,
                               plugins: [
                                 "advlist",

@@ -50,7 +50,7 @@ function CreateProject(props) {
 
           <Editor
             name="description"
-            initialValue="<p>Project_n</p>"
+            initialValue=""
             init={{
               height: 500,
               menubar: false,

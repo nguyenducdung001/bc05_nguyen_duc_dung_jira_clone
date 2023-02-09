@@ -5,8 +5,6 @@ import Home from "./Pages/Home/Home";
 
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 
-import Register from "./Pages/Register/Register";
-
 import { createBrowserHistory } from "history";
 import { Route, Router, Switch, useHistory } from "react-router-dom";
 import HomeTemplate from "./templates/HomeTemplates/HomeTemplate";
@@ -27,6 +25,7 @@ import IndexJira from "./ProjectDetail/IndexJira";
 
 import DragAndDropDnd from "./Pages/DragAndDropDnD/DragAndDropDnD";
 import UserManagement from "./Pages/UserManagement/UserManagement";
+import RegisterJira from "./RegisterJira/RegisterJira";
 
 // Dùng để phân component
 export const history = createBrowserHistory();
@@ -50,7 +49,7 @@ function App() {
 
       <Switch>
         <UserLoginTemplate exact path="/login" Component={LoginJira} />
-        <UserLoginTemplate exact path="/register" Component={Register} />
+        <UserLoginTemplate exact path="/register" Component={RegisterJira} />
         <JiraTemplate exact path="/jira" Component={IndexJira} />
         <JiraTemplate exact path="/createproject" Component={CreateProject} />
         <JiraTemplate
@@ -66,6 +65,7 @@ function App() {
         <JiraTemplate exact path="/" Component={ProjectManagement} />
         <JiraTemplate exact path="/usermanagement" Component={UserManagement} />
         <HomeTemplate exact path="/dragdrop" Component={DragAndDropDnd} />
+        <HomeTemplate exact path="*" Component={PageNotFound} />
       </Switch>
     </>
   );

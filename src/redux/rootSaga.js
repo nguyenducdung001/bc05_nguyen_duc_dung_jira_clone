@@ -15,6 +15,7 @@ export function* rootSaga() {
     ProjectCategorySaga.followAllProjectCategory(),
     ProjectSaga.followcreateProjectSaga(),
     UserJiraSaga.followSignInSaga(),
+    UserJiraSaga.followSignUnSaga(),
     UserJiraSaga.followGetUserByProjectIdSaga(),
     ProjectSaga.followGetListProjectSaga(),
     ProjectSaga.followUpdateProjectSaga(),

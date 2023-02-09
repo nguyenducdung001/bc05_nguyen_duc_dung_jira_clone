@@ -75,8 +75,6 @@ export default function ModalJira(props) {
         {visibleEditor ? (
           <div>
             <Editor
-              // apiKey="your-api-key"
-              // onInit={(evt, editor) => (editorRef.current = editor)}
               name="description"
               initialValue={taskDetailModel.description}
               init={{
@@ -125,11 +123,6 @@ export default function ModalJira(props) {
                   value: content,
                 });
 
-                // dispatch({
-                //   type: CHANGE_TASK_MODAL,
-                //   name: "description",
-                //   value: content,
-                // });
                 setVisibleEditor(false);
               }}
             >
@@ -138,12 +131,6 @@ export default function ModalJira(props) {
             <button
               className="btn btn-outline-secondary m-2"
               onClick={() => {
-                // dispatch({
-                //   type: HANDLE_CHANGE_POST_API_SAGA,
-                //   actionType: CHANGE_TASK_MODAL,
-                //   name: "description",
-                //   value: historyContent,
-                // });
                 setHistoryContent(taskDetailModel.description);
                 setVisibleEditor(false);
               }}
@@ -175,12 +162,6 @@ export default function ModalJira(props) {
       name,
       value,
     });
-
-    // dispatch({
-    //   type: CHANGE_TASK_MODAL,
-    //   name,
-    //   value,
-    // });
   };
 
   const renderTimeTracking = () => {
@@ -313,33 +294,22 @@ export default function ModalJira(props) {
                 <div>
                   <i className="fa fa-link" />
                   <span style={{ paddingRight: 20 }}>Copy link</span>
-                  {/*  */}
-                  {/* <Popconfirm
-                    style={{ index: "99" }}
-                    placement="top"
-                    title="Are you sure to delete this project?"
-                    description="Delete this project!"
-                    onConfirm={() => {
-                      dispatch({
-                        type: DELETE_TASK_SAGA,
-                        taskId: taskDetailModel.taskId,
-                      });
-                    }}
-                    okText="Yes"
-                    cancelText="No"
-                  >
-                </Popconfirm> */}
-                  {/*  */}
+
                   <Button
                     type="button"
                     className="close"
                     data-dismiss="modal"
                     aria-label="Close"
                     onClick={() => {
-                      dispatch({
-                        type: DELETE_TASK_SAGA,
-                        task: taskDetailModel,
-                      });
+                      if (
+                        window.confirm("Are you sure to delete this task?") ==
+                        true
+                      ) {
+                        dispatch({
+                          type: DELETE_TASK_SAGA,
+                          task: taskDetailModel,
+                        });
+                      }
                     }}
                   >
                     <i
@@ -379,23 +349,12 @@ export default function ModalJira(props) {
                           <img src={taskDetailModel.lstComment.avatar} alt />
                         </div>
                         <div className="input-comment">
-                          {/* <input
-                            onChange={(e) => {
-                              // console.log(e.target.value);
-                              setContentComment(e.target.value);
-                            }}
-                            type="text"
-                            name="contentComment"
-                            placeholder="Add comment"
-                          /> */}
                           <Editor
-                            // apiKey="your-api-key"
-                            // onInit={(evt, editor) => (editorRef.current = editor)}
                             name="contentComment"
                             initialValue={editComment.contentComment}
                             value={contentComment}
                             init={{
-                              height: 500,
+                              height: 300,
                               menubar: false,
                               plugins: [
                                 "advlist",
@@ -558,16 +517,6 @@ export default function ModalJira(props) {
                         onChange={(e) => {
                           {
                             handleChange(e);
-                            // const action = {
-                            //   type: UPDATE_STATUS_TASK_SAGA,
-                            //   taskStatusUpdate: {
-                            //     taskId: taskDetailModel.taskId,
-                            //     statusId: e.target.value,
-                            //     projectId: taskDetailModel.projectId,
-                            //   },
-                            // };
-
-                            // dispatch(action);
                           }
                         }}
                       >
@@ -608,11 +557,6 @@ export default function ModalJira(props) {
                                         actionType: REMOVE_USER_ASSIGNESS,
                                         userId: user.id,
                                       });
-
-                                      // dispatch({
-                                      //   type: REMOVE_USER_ASSIGNESS,
-                                      //   userId: user.id,
-                                      // });
                                     }}
                                   />
                                 </div>
@@ -657,34 +601,11 @@ export default function ModalJira(props) {
                               actionType: CHANGE_ASSIGNESS,
                               userSelected,
                             });
-
-                            //dispatch reducer
-                            // dispatch({
-                            //   type: CHANGE_ASSIGNESS,
-                            //   userSelected,
-                            // });
                           }}
                         ></Select>
                       </div>
                     </div>
-                    {/* <div className="reporter">
-                      <h6>REPORTER</h6>
-                      <div style={{ display: "flex" }} className="item">
-                        <div className="avatar">
-                          <img
-                            src={require("../../assets/img/download (1).jfif")}
-                            alt
-                          />
-                        </div>
-                        <p className="name">
-                          Pickle Rick
-                          <i
-                            className="fa fa-times"
-                            style={{ marginLeft: 5 }}
-                          />
-                        </p>
-                      </div>
-                    </div> */}
+
                     <div className="priority" style={{ marginBottom: 20 }}>
                       <h6>PRIORITY</h6>
                       <select

@@ -50,8 +50,6 @@ export default function ModalJira(props) {
 
   const [contentComment, setContentComment] = useState("");
 
-  const [idCommentTask, setIdCommentTask] = useState("");
-
   const [detailTask, setDetailTask] = useState(taskDetailModel);
 
   console.log("taskDetailModel", taskDetailModel);
@@ -60,7 +58,6 @@ export default function ModalJira(props) {
 
   useEffect(() => {
     setDetailTask(taskDetailModel);
-    setIdCommentTask(taskDetailModel.taskId);
     setValueDesc(taskDetailModel.description);
     dispatch({ type: GET_ALL_PRIORITY_SAGA });
     dispatch({ type: GET_ALL_STATUS_SAGA });
@@ -334,6 +331,10 @@ export default function ModalJira(props) {
                 </Popconfirm> */}
                   {/*  */}
                   <Button
+                    type="button"
+                    className="close"
+                    data-dismiss="modal"
+                    aria-label="Close"
                     onClick={() => {
                       dispatch({
                         type: DELETE_TASK_SAGA,
@@ -392,7 +393,7 @@ export default function ModalJira(props) {
                             // onInit={(evt, editor) => (editorRef.current = editor)}
                             name="contentComment"
                             initialValue={editComment.contentComment}
-                            // value={editComment}
+                            value={contentComment}
                             init={{
                               height: 500,
                               menubar: false,
@@ -439,6 +440,7 @@ export default function ModalJira(props) {
                                   contentComment: contentComment,
                                 },
                               });
+                              setContentComment("");
                             }}
                           >
                             Create
@@ -528,7 +530,7 @@ export default function ModalJira(props) {
                                           dispatch({
                                             type: DELETE_COMMENT_SAGA,
                                             comment: {
-                                              taskId: idCommentTask,
+                                              taskId: taskDetailModel.taskId,
                                               idComment: list.id,
                                             },
                                           });

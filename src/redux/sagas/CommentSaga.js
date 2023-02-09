@@ -90,15 +90,15 @@ function* deleteCommentSaga(action) {
     if (status === STATUS_CODE.SUCCESS) {
       // const { taskId, idComment } = comment;
       notiFunction("success", "Delete comment successfully");
-      // console.log("delete", data);
-      // yield put({
-      //   type: GET_ALL_COMMENT_SAGA,
-      //   taskId: taskId,
-      // });
-      // yield put({
-      //   type: GET_TASK_DETAIL_SAGA,
-      //   taskId: taskId,
-      // });
+      console.log("delete", data);
+      yield put({
+        type: GET_ALL_COMMENT_SAGA,
+        taskId: comment.taskId,
+      });
+      yield put({
+        type: GET_TASK_DETAIL_SAGA,
+        taskId: comment.taskId,
+      });
     }
   } catch (err) {
     console.log(err);

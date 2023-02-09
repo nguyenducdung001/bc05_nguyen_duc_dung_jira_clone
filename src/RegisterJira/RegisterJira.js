@@ -1,21 +1,22 @@
 import React from "react";
 import * as Yup from "yup";
 import { connect } from "react-redux";
+import { Input, Button } from "antd";
+import { withFormik } from "formik";
 import {
   UserOutlined,
   LockOutlined,
   FacebookOutlined,
   TwitterOutlined,
   MailOutlined,
+  PhoneOutlined,
 } from "@ant-design/icons";
-import { Input, Button } from "antd";
-import { withFormik } from "formik";
-import { USER_SIGNIN_API } from "./../redux/constant/jiraConstant";
-import { signInAction } from "../redux/action/JiraAction";
+import { registerAction } from "../redux/action/JiraAction";
 
-function LoginJira(props) {
+function RegisterJira(props) {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
     props;
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -27,7 +28,7 @@ function LoginJira(props) {
         style={{ height: window.innerHeight }}
       >
         <h1 className="display-4" style={{ fontWeight: "300" }}>
-          Login Jira
+          Register Jira
         </h1>
         <div className="d-flex flex-column mt-5 w-50">
           <Input
@@ -49,21 +50,48 @@ function LoginJira(props) {
           />
         </div>
         <div className="text-danger">{errors.passWord}</div>
+
+        <div className="d-flex flex-column mt-3 w-50">
+          <Input
+            onChange={handleChange}
+            name="name"
+            size="large"
+            placeholder="Name"
+            prefix={<UserOutlined />}
+          />
+        </div>
+        <div className="text-danger">{errors.name}</div>
+        <div className="d-flex flex-column mt-3 w-50">
+          <Input
+            onChange={handleChange}
+            name="phoneNumber"
+            size="large"
+            placeholder="Phone number"
+            prefix={<PhoneOutlined />}
+          />
+        </div>
+        <div className="text-danger">{errors.phoneNumber}</div>
+
         <Button
           htmlType="submit"
           type="primary"
           size="large"
           className="mt-5 w-50"
         >
-          Login
+          Register
         </Button>
       </div>
     </form>
   );
 }
 
-const LoginJiraWithFormik = withFormik({
-  mapPropsToValues: () => ({ email: "", passWord: "" }),
+const RegisterJiraWithFormik = withFormik({
+  mapPropsToValues: () => ({
+    email: "",
+    passWord: "",
+    name: "",
+    phoneNumber: "",
+  }),
 
   validationSchema: Yup.object().shape({
     email: Yup.string()
@@ -72,13 +100,18 @@ const LoginJiraWithFormik = withFormik({
     passWord: Yup.string()
       .min(6, "At least 6 character")
       .max(32, "No more 32 character"),
+    phoneNumber: Yup.string().required("Phone number is required"),
+    name: Yup.string().required("name is required"),
   }),
 
-  handleSubmit: ({ email, passWord }, { props, setSubmitting }) => {
-    props.dispatch(signInAction(email, passWord));
+  handleSubmit: (
+    { email, passWord, name, phoneNumber },
+    { props, setSubmitting }
+  ) => {
+    props.dispatch(registerAction(email, passWord, name, phoneNumber));
   },
 
-  displayName: "LoginJira",
-})(LoginJira);
+  displayName: "RegisterJira",
+})(RegisterJira);
 
-export default connect(null)(LoginJiraWithFormik);
+export default connect(null)(RegisterJiraWithFormik);

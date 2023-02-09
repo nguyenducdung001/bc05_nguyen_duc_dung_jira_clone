@@ -61,7 +61,6 @@ export default function UserManagement(props) {
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const handleChange = (pagination, filters, sorter) => {
-    console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
@@ -134,18 +133,26 @@ export default function UserManagement(props) {
           >
             <EditOutlined />
           </Button>
-          <Button
-            onClick={() => {
+          {/*  */}
+          <Popconfirm
+            placement="top"
+            title="Are you sure to delete this user?"
+            description="Delete this user!"
+            onConfirm={() => {
               dispatch({
                 type: DELETE_USER_SAGA,
                 deleteUser: record,
               });
             }}
-            type="primary"
-            danger
+            okText="Yes"
+            cancelText="No"
           >
-            <DeleteOutlined />
-          </Button>
+            <Button type="primary" danger>
+              <DeleteOutlined />
+            </Button>
+          </Popconfirm>
+
+          {/*  */}
         </Space>
       ),
     },
@@ -162,7 +169,12 @@ export default function UserManagement(props) {
         <Button onClick={clearFilters}>Clear filters</Button>
         <Button onClick={clearAll}>Clear filters and sorters</Button>
       </Space>
-      <Table columns={columns} dataSource={userList} onChange={handleChange} />
+      <Table
+        columns={columns}
+        rowKey={"userId"}
+        dataSource={userList}
+        onChange={handleChange}
+      />
     </div>
   );
 }

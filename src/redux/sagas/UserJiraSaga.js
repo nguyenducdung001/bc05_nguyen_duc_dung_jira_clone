@@ -6,7 +6,9 @@ import {
   GET_USER_SEARCH,
   REMOVE_USER_PROJECT_API,
   USER_SIGNIN_API,
+  USER_SIGNUP_API,
   USLOGIN,
+  US_REGISTER,
 } from "./../constant/jiraConstant";
 import { jiraServices } from "./../../services/jiraServices";
 import { DISPLAY_LOADING, HIDE_LOADING } from "./../constant/LoadingConst";
@@ -23,7 +25,7 @@ import {
 } from "../constant/UserConstant";
 
 // Quản lí action saga
-
+// Login
 function* signInSaga(action) {
   console.log(action);
   // Hiển thị loading
@@ -64,6 +66,30 @@ function* signInSaga(action) {
 
 export function* followSignInSaga() {
   yield takeLatest(USER_SIGNIN_API, signInSaga);
+}
+
+// Register
+function* signUpSaga(action) {
+  console.log(action);
+
+  try {
+    // Gọi api lấy dữ liệu về
+    const { data, status } = yield call(() =>
+      jiraServices.signUpJira(action.userRegister)
+    );
+
+    if (status == STATUS_CODE.SUCCESS) {
+      console.log(data);
+      alert("Register successfully!");
+      history.push("/login");
+    }
+  } catch (err) {
+    console.log(err.response.data);
+  }
+}
+
+export function* followSignUnSaga() {
+  yield takeLatest(USER_SIGNUP_API, signUpSaga);
 }
 
 // ---getUser

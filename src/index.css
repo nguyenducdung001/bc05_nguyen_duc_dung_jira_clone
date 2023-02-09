@@ -93,13 +93,13 @@
 .menu {
   height: 100vh;
   width: 18%;
-  /* margin-left: 4%; */
+
   background-color: #f4f5f7;
 }
 
 .menu .account {
   display: flex;
-  /* padding: 5% 17%; */
+
   margin-bottom: 5%;
 }
 
@@ -132,12 +132,9 @@
 }
 
 .menu .control {
-  padding: 0% 10%;
   text-align: left;
   margin-bottom: 8%;
   border-bottom: 2px solid #c4c5c6;
-  margin-left: 7%;
-  margin-right: 7%;
 }
 
 .menu .control div {
@@ -159,11 +156,8 @@
 }
 
 .menu .feature {
-  padding: 0% 10%;
   text-align: left;
   margin-bottom: 8%;
-  margin-left: 7%;
-  margin-right: 7%;
 }
 
 .menu .feature i {

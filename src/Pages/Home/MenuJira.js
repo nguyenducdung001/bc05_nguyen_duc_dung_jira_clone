@@ -68,7 +68,7 @@ export default function MenuJira(props) {
             style={{ textDecoration: "none" }}
             to="/register"
           >
-            Sign Up
+            Register
           </NavLink>
         </div>
         <div>

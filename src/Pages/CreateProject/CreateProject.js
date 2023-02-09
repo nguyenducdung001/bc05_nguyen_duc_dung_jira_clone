@@ -29,8 +29,6 @@ function CreateProject(props) {
     });
   }, []);
 
-  // console.log("KetQua", arrProjectCategory);
-  //
   const handleEditChange = (content, editor) => {
     setFieldValue("description", content);
   };
@@ -51,8 +49,6 @@ function CreateProject(props) {
           <p>Description</p>
 
           <Editor
-            // apiKey="your-api-key"
-            // onInit={(evt, editor) => (editorRef.current = editor)}
             name="description"
             initialValue="<p>Project_n</p>"
             init={{

@@ -26,11 +26,6 @@ function FormEditProject(props) {
     setFieldValue,
   } = props;
 
-  // const submitForm = (e) => {
-  //   e.preventDefault();
-  //   alert("submit edit");
-  // };
-
   useEffect(() => {
     setFirstValue(values.description);
     // Gọi api load project category
@@ -78,6 +73,7 @@ function FormEditProject(props) {
               Project Category
             </p>
             <select
+              onChange={handleChange}
               className="form-control"
               name="categoryId"
               value={values.categoryId}
@@ -98,8 +94,6 @@ function FormEditProject(props) {
               Description
             </p>
             <Editor
-              // apiKey="your-api-key"
-              // onInit={(evt, editor) => (editorRef.current = editor)}
               name="description"
               initialValue={firstValue}
               init={{

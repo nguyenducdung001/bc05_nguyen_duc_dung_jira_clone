@@ -255,8 +255,6 @@ function FormCreateTask(props) {
       <div className="form-group">
         <p>Description</p>
         <Editor
-          // apiKey="your-api-key"
-          // onInit={(evt, editor) => (editorRef.current = editor)}
           name="description"
           initialValue=""
           init={{
@@ -295,9 +293,6 @@ function FormCreateTask(props) {
           }}
         />
       </div>
-      {/* <button type="submit" className="btn btn-outline-secondary">
-        Submit
-      </button> */}
     </form>
   );
 }
@@ -306,13 +301,6 @@ const FormCreateTaskWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
     const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
-
-    // if (arrProject.length > 0) {
-    //   props.dispatch({
-    //     type: GET_USER_BY_PROJECT_ID_SAGA,
-    //     idProject: arrProject[0]?.id,
-    //   });
-    // }
 
     return {
       taskName: "",
@@ -341,12 +329,6 @@ const FormCreateTaskWithFormik = withFormik({
 
   displayName: "FormCreateTask",
 })(FormCreateTask);
-
-// const { arrProject } = useSelector((state) => state.ProjectJiraReducer);
-// const { arrTaskType } = useSelector((state) => state.TaskTypeReducer);
-// const { arrPriority } = useSelector((state) => state.PriorityReducer);
-// const { userSearch } = useSelector((state) => state.UserLoginJiraReducer);
-// const { arrStatus } = useSelector((state) => state.StatusReducer);
 
 const mapStateToProps = (state) => {
   return {

@@ -42,8 +42,6 @@ function* signInSaga(action) {
     // Lưu vào localStorage khi đăng nhập thành công
     localStorage.setItem(TOKEN, data.content.accessToken);
 
-    // console.log(localStorage.getItem(TOKEN));
-
     localStorage.setItem(
       USER_LOGIN_SETTING_SYSTEM,
       JSON.stringify(data.content)
@@ -53,8 +51,6 @@ function* signInSaga(action) {
       type: USLOGIN,
       userLogin: data.content,
     });
-
-    // let history = yield select((state) => state.HistoryReducer.history);
 
     history.push("/jira");
   } catch (err) {
@@ -73,7 +69,6 @@ export function* followSignInSaga() {
 // ---getUser
 
 function* getUserSaga(action) {
-  // console.log("keyWord", action.keyWord);
   try {
     // Gọi api lấy dữ liệu về
     const { data, status } = yield call(() =>
@@ -84,7 +79,6 @@ function* getUserSaga(action) {
       type: GET_USER_SEARCH,
       listUserSearch: data.content,
     });
-    // console.log("data", data);
   } catch (err) {
     console.log(err.response.data);
   }

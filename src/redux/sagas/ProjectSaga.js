@@ -35,11 +35,6 @@ function* ProjectSaga(action) {
       jiraServices.createProjectAuthorization(action.newProject)
     );
     if (status === STATUS_CODE.SUCCESS) {
-      // dispatch lên reducer thông qua put
-      // yield put({
-      //   type: GET_ALL_PROJECT,
-      //   data: data.content,
-      // });
       console.log(data);
       history.push("/projectmanagement");
     }
@@ -80,8 +75,6 @@ export function* followGetListProjectSaga() {
 // -----updateproject
 
 function* updateProjectSaga(action) {
-  // console.log("action", action);
-  // return;
   yield put({
     type: DISPLAY_LOADING,
   });
@@ -98,12 +91,10 @@ function* updateProjectSaga(action) {
       yield put({
         type: GET_LIST_PROJECT_SAGA,
       });
-      // yield call(getListProjectSaga);
+
       yield put({
         type: CLOSE_DRAWER,
       });
-
-      // history.push("/projectmanagement");
     }
   } catch (err) {
     console.log(err.response.data);
@@ -120,8 +111,6 @@ export function* followUpdateProjectSaga() {
 // -----deleteProject
 
 function* deleteProjectSaga(action) {
-  // console.log("action", action);
-  // return;
   yield put({
     type: DISPLAY_LOADING,
   });
@@ -159,14 +148,6 @@ export function* followDeleteProjectSaga() {
 // -----getProjectDetailSaga
 
 function* getProjectDetailSaga(action) {
-  // console.log("action", action);
-  // return;
-  // yield put({
-  //   type: DISPLAY_LOADING,
-  // });
-
-  // yield delay(500);
-
   try {
     const { data, status } = yield call(() =>
       projectService.getProjectDetail(action.projectId)
@@ -180,9 +161,6 @@ function* getProjectDetailSaga(action) {
     console.log("404 not found!");
     history.push("/projectmanagement");
   }
-  // yield put({
-  //   type: HIDE_LOADING,
-  // });
 }
 
 export function* followGetProjectDetailSaga() {

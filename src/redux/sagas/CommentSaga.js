@@ -22,9 +22,6 @@ function* getAllCommentSaga(action) {
     const { data, status } = yield call(() =>
       commentService.getAllComment(taskId)
     );
-    // yield put({
-    //   type: GET_TASK_DETAIL_SAGA,
-    // });
 
     console.log(data);
   } catch (err) {
@@ -64,8 +61,6 @@ function* insertCommentSaga(action) {
         taskId: data.content.taskId,
       });
     }
-
-    // console.log("insertComment", data);
   } catch (err) {
     console.log(err);
     console.log(err.response?.data);
@@ -79,7 +74,6 @@ export function* followInsertCommentSaga() {
 // ----delete comment
 
 function* deleteCommentSaga(action) {
-  // console.log("dele", action);
   const { comment } = action;
   //
   try {
@@ -88,9 +82,8 @@ function* deleteCommentSaga(action) {
     );
 
     if (status === STATUS_CODE.SUCCESS) {
-      // const { taskId, idComment } = comment;
       notiFunction("success", "Delete comment successfully");
-      console.log("delete", data);
+
       yield put({
         type: GET_ALL_COMMENT_SAGA,
         taskId: comment.taskId,
@@ -113,7 +106,6 @@ export function* followDeleteCommentSaga() {
 // ----update comment
 
 function* updateCommentSaga(action) {
-  console.log("updateAction", action);
   const { updateComment } = action;
   //
   try {
@@ -122,7 +114,6 @@ function* updateCommentSaga(action) {
     );
 
     if (status === STATUS_CODE.SUCCESS) {
-      console.log("updateData", data);
       yield put({
         type: GET_ALL_COMMENT_SAGA,
         taskId: data.content.taskId,

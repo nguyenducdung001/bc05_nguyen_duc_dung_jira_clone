@@ -11,7 +11,8 @@ if (localStorage.getItem(USER_LOGIN_SETTING_SYSTEM)) {
 const initialState = {
   userLogin: usLogin,
   userSearch: [],
-  arrUser: [], //get for select of create task
+  //get for select of create task
+  arrUser: [],
 };
 
 export const UserLoginJiraReducer = (state = initialState, action) => {
@@ -22,7 +23,7 @@ export const UserLoginJiraReducer = (state = initialState, action) => {
     }
     case GET_USER_SEARCH: {
       state.userSearch = action.listUserSearch;
-      // console.log("getUser", state);
+
       return { ...state };
     }
     case GET_USER_BY_PROJECT_ID: {

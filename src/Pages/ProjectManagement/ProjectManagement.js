@@ -50,7 +50,6 @@ export default function ProjectManagement(props) {
   const [filteredInfo, setFilteredInfo] = useState({});
   const [sortedInfo, setSortedInfo] = useState({});
   const handleChange = (pagination, filters, sorter) => {
-    // console.log("Various parameters", pagination, filters, sorter);
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
@@ -92,15 +91,7 @@ export default function ProjectManagement(props) {
         return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>;
       },
     },
-    // {
-    //   title: "Description",
-    //   dataIndex: "description",
-    //   key: "description",
-    //   render: (text) => {
-    //     let string = parse(text);
-    //     return <div>{string}</div>;
-    //   },
-    // },
+
     {
       title: "Creator",
       // dataIndex: "categoryName",
@@ -182,7 +173,7 @@ export default function ProjectManagement(props) {
                                     style={{ borderRadius: "50%" }}
                                     className="btn btn-danger"
                                   >
-                                    {/* <CloseOutlined /> */}X
+                                    X
                                   </button>
                                 </td>
                               </tr>

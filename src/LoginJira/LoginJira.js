@@ -56,22 +56,6 @@ function LoginJira(props) {
         >
           Login
         </Button>
-
-        {/* <div className="social mt-3 d-flex">
-          <Button
-            style={{ backgroundColor: "rgb(59,89,152)", color: "#fff" }}
-            size={"large"}
-            shape="circle"
-            icon={<FacebookOutlined />}
-          ></Button>
-          <Button
-            className="ml-3"
-            style={{ backgroundColor: "rgb(59,89,152)", color: "#fff" }}
-            size={"large"}
-            shape="circle"
-            icon={<TwitterOutlined />}
-          ></Button>
-        </div> */}
       </div>
     </form>
   );

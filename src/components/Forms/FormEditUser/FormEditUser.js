@@ -1,22 +1,3 @@
-// accessToken
-// :
-// "eyJhbGciOiJodHRwOi8vd3d3LnczLm9yZy8yMDAxLzA0L3htbGRzaWctbW9yZSNobWFjLXNoYTI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJjeWJlcnNvZnQwMDFAZ21haWwuY29tIiwibmJmIjoxNjc1ODI2Nzc2LCJleHAiOjE2NzU4MzAzNzZ9.hJwN-RIPZu7BdR7lyiAQfIOGxPnNuSx2QDhRz2czVLQ"
-// avatar
-// :
-// "https://ui-avatars.com/api/?name=cyber"
-// email
-// :
-// "cybersoft001@gmail.com"
-// id
-// :
-// 4092
-// name
-// :
-// "cyber"
-// phoneNumber
-// :
-// "10091900"
-
 import React, { useEffect } from "react";
 import { connect } from "react-redux";
 import { withFormik } from "formik";

@@ -28,7 +28,7 @@ import { notification } from "antd";
 
 function* createTaskSaga(action) {
   // Hiển thị loading
-  // console.log("create", action.taskOject);
+
   const { taskOject } = action;
 
   yield put({
@@ -76,7 +76,7 @@ function* getTaskDetailSaga(action) {
     const { data, status } = yield call(() =>
       taskService.getTaskDetail(taskId)
     );
-    // console.log("getdetail", data);
+
     yield put({
       type: GET_TASK_DETAIL,
       taskDetailModel: data.content,
@@ -132,34 +132,6 @@ export function* followUpdateTaskSaga() {
 export function* handleChangePostApi(action) {
   // Gọi action làm thay đổi taskDetailModal
   console.log("abc", action);
-
-  // switch (action.actionType) {
-  //   case CHANGE_TASK_MODAL:
-  //     {
-  //       const { value, name } = action;
-  //       yield put({
-  //         type: CHANGE_TASK_MODAL,
-  //         name,
-  //         value,
-  //       });
-  //     }
-
-  //   case CHANGE_ASSIGNESS: {
-  //     const { userSelected } = action;
-  //     yield put({
-  //       type: CHANGE_ASSIGNESS,
-  //       userSelected,
-  //     });
-  //   }
-
-  //   case REMOVE_USER_ASSIGNESS:
-  //     {
-  //       const { userId } = action;
-  //       yield put({
-  //         type: REMOVE_USER_ASSIGNESS,
-  //         userId,
-  //       });
-  //     }
 
   if (action.actionType == CHANGE_TASK_MODAL) {
     const { value, name } = action;
@@ -239,11 +211,7 @@ function* deleteTaskSaga(action) {
         type: GET_PROJECT_DETAIL_API,
         projectId: task.projectId,
       });
-      // window.location.reload();
-      // yield put({
-      //   type: GET_TASK_DETAIL_SAGA,
-      //   taskId: task.taskId,
-      // });
+
       notiFunction("success", "Delete task successfully");
     }
   } catch (err) {

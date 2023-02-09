@@ -31,12 +31,6 @@ export default function Login(props) {
         });
         // Lưu vào localStore
         userLocaService.set(res.data.content);
-        // Chuyển hướng về trang chủ nhưng cần load trang :  window.location.href="/"
-        // setTimeout(() => {
-        //   // Dùng navigate để không cần load lại trang
-        //   navigate("/");
-        // }, 1000);
-        //
       })
       .catch((err) => {
         console.log(err);

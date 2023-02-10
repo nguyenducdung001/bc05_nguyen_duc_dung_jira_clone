@@ -17,7 +17,9 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   DELETE_USER_SAGA,
   EDIT_USER,
+  GET_LIST_USER,
   GET_LIST_USER_SAGA,
+  USER_LIST_FILTER,
 } from "../../redux/constant/UserManageConstant";
 import {
   GET_USER_API,
@@ -185,9 +187,15 @@ export default function UserManagement(props) {
           }}
           onSelect={(value, option) => {
             setValueSearh(option.label);
+
+            // Gửi value lên reducer để filter userlist
+
+            dispatch({
+              type: USER_LIST_FILTER,
+              userId: value,
+            });
           }}
           onSearch={(value) => {
-            console.log("value", value);
             dispatch({
               type: GET_USER_API,
               keyWord: value,

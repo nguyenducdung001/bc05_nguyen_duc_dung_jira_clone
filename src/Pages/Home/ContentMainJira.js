@@ -3,6 +3,7 @@ import { DragDropContext, Draggable, Droppable } from "react-beautiful-dnd";
 
 import { useDispatch } from "react-redux";
 import { ref } from "yup";
+import { Desktop, Tablet } from "../../HOC/Responsive";
 import {
   GET_TASK_DETAIL_SAGA,
   UPDATE_STATUS_TASK_SAGA,
@@ -51,7 +52,7 @@ export default function ContentMainJira(props) {
                   <div
                     ref={provided.innerRef}
                     {...provided.droppableProps}
-                    className="card pb-2"
+                    className="card pb-2 mt-3"
                     style={{ width: "17rem", height: "auto" }}
                   >
                     <div className="card-header">{taskDetail.statusName}</div>
@@ -142,8 +143,15 @@ export default function ContentMainJira(props) {
   };
 
   return (
-    <div className="content" style={{ display: "flex" }}>
-      {renderLstTast()}
-    </div>
+    <>
+      <Tablet>
+        <div className="content w-75">{renderLstTast()}</div>
+      </Tablet>
+      <Desktop>
+        <div className="content " style={{ display: "flex" }}>
+          {renderLstTast()}
+        </div>
+      </Desktop>
+    </>
   );
 }

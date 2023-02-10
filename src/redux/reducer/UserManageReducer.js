@@ -1,4 +1,8 @@
-import { EDIT_USER, GET_LIST_USER } from "../constant/UserManageConstant";
+import {
+  EDIT_USER,
+  GET_LIST_USER,
+  USER_LIST_FILTER,
+} from "../constant/UserManageConstant";
 
 const initialState = {
   userList: [],
@@ -22,6 +26,13 @@ export const UserManageReducer = (state = initialState, action) => {
       const { editUser } = action;
       state.editUser = editUser;
       state.editUser.id = editUser.userId;
+      return { ...state };
+    }
+    case USER_LIST_FILTER: {
+      console.log("userlistfilter", action);
+      state.userList = [
+        ...state.userList.filter((user) => user.userId == action.userId),
+      ];
       return { ...state };
     }
     default:

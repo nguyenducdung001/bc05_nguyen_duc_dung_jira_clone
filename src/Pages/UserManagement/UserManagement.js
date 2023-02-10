@@ -9,15 +9,23 @@ import {
   Avatar,
   Popover,
   AutoComplete,
+  Input,
 } from "antd";
+
 import { EditOutlined, DeleteOutlined, CloseOutlined } from "@ant-design/icons";
 import { useDispatch, useSelector } from "react-redux";
 import {
   DELETE_USER_SAGA,
   EDIT_USER,
+  GET_LIST_USER,
   GET_LIST_USER_SAGA,
+  USER_LIST_FILTER,
 } from "../../redux/constant/UserManageConstant";
-import { OPEN_FORM_EDIT_USER } from "../../redux/constant/jiraConstant";
+import {
+  GET_USER_API,
+  GET_USER_SEARCH,
+  OPEN_FORM_EDIT_USER,
+} from "../../redux/constant/jiraConstant";
 import FormEditUser from "../../components/Forms/FormEditUser/FormEditUser";
 
 const data = [
@@ -49,6 +57,10 @@ const data = [
 
 export default function UserManagement(props) {
   const { userList } = useSelector((state) => state.UserManageReducer);
+
+  const { userSearch } = useSelector((state) => state.UserLoginJiraReducer);
+
+  const [valueSearch, setValueSearh] = useState("");
 
   const dispatch = useDispatch();
 
@@ -82,7 +94,7 @@ export default function UserManagement(props) {
       title: "User ID",
       dataIndex: "userId",
       key: "userId",
-      sorter: (a, b) => a.id - b.id,
+      sorter: (a, b) => a.userId - b.userId,
       sortDirections: ["descend"],
     },
     {
@@ -159,15 +171,39 @@ export default function UserManagement(props) {
   ];
 
   return (
-    <div className="container-fluid mt-5">
-      <Space
-        style={{
-          marginBottom: 16,
-        }}
-      >
-        <Button onClick={setAgeSort}>Sort age</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
+    <div className="container-fluid mt-2 w-100">
+      <Space className="text-center">
+        <AutoComplete
+          // dropdownMatchSelectWidth={252}
+          style={{
+            width: 500,
+          }}
+          options={userSearch?.map((user, index) => {
+            return { label: user.name, value: user.userId.toString() };
+          })}
+          value={valueSearch}
+          onChange={(text) => {
+            setValueSearh(text);
+          }}
+          onSelect={(value, option) => {
+            setValueSearh(option.label);
+
+            // Gửi value lên reducer để filter userlist
+
+            dispatch({
+              type: USER_LIST_FILTER,
+              userId: value,
+            });
+          }}
+          onSearch={(value) => {
+            dispatch({
+              type: GET_USER_API,
+              keyWord: value,
+            });
+          }}
+        >
+          <Input.Search size="large" placeholder="" enterButton />
+        </AutoComplete>
       </Space>
       <Table
         columns={columns}

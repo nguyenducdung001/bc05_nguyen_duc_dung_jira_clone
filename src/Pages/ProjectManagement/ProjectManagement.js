@@ -290,7 +290,7 @@ export default function ProjectManagement(props) {
     },
   ];
   return (
-    <div className="container-fluid mt-1 h-100">
+    <div className="container-fluid mt-1 h-100 w-100">
       <Space>
         <Button onClick={setAgeSort}>Sort age</Button>
         <Button onClick={clearFilters}>Clear filters</Button>

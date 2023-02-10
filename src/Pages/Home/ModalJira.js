@@ -346,7 +346,11 @@ export default function ModalJira(props) {
                         style={{ display: "flex" }}
                       >
                         <div className="avatar">
-                          <img src={taskDetailModel.lstComment.avatar} alt />
+                          {taskDetailModel.lstComment
+                            ?.slice(0, 1)
+                            .map((list, index) => {
+                              return <img key={index} src={list.avatar} alt />;
+                            })}
                         </div>
                         <div className="input-comment">
                           <Editor

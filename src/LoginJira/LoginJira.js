@@ -59,7 +59,7 @@ function LoginJira(props) {
           Login
         </Button>
         <div className="mt-2">
-          <span>Aren't you an account!</span>
+          <span>Do you have an account?</span>
           <NavLink to="/register">Register</NavLink>
         </div>
       </div>

@@ -82,7 +82,7 @@ function RegisterJira(props) {
           Register
         </Button>
         <div className="mt-2">
-          <span>You had an account!</span>
+          <span>You have an account!</span>
           <NavLink to="/login">Login</NavLink>
         </div>
       </div>

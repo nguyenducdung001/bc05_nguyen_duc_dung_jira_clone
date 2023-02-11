@@ -1,6 +1,6 @@
 import { applyMiddleware, combineReducers, createStore } from "redux";
 import thunk from "redux-thunk";
-import JiraReducer from "./reducer/JiraReducer";
+
 import { ProjectCategoryReducer } from "./reducer/ProjectCatagoryReducer";
 
 import { rootSaga } from "./rootSaga";
@@ -23,7 +23,7 @@ const middleWareSaga = createSagaMiddleware();
 
 const rootReducer = combineReducers({
   // reducer khai báo tại đây
-  JiraReducer,
+
   ProjectCategoryReducer,
   HistoryReducer,
   UserLoginJiraReducer,

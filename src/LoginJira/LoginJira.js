@@ -12,6 +12,7 @@ import { Input, Button } from "antd";
 import { withFormik } from "formik";
 import { USER_SIGNIN_API } from "./../redux/constant/jiraConstant";
 import { signInAction } from "../redux/action/JiraAction";
+import { NavLink } from "react-router-dom";
 
 function LoginJira(props) {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
@@ -57,6 +58,10 @@ function LoginJira(props) {
         >
           Login
         </Button>
+        <div className="mt-2">
+          <span>Aren't you an account!</span>
+          <NavLink to="/register">Register</NavLink>
+        </div>
       </div>
     </form>
   );

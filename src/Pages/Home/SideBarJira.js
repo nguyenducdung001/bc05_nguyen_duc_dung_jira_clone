@@ -11,7 +11,10 @@ import {
 import { Layout, Menu, theme } from "antd";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { OPEN_FORM_CREATE_TASK } from "../../redux/constant/jiraConstant";
+import {
+  GET_ALL_PROJECT_DROPDOWN_SAGA,
+  OPEN_FORM_CREATE_TASK,
+} from "../../redux/constant/jiraConstant";
 import FormCreateTask from "./../../components/Forms/FormCreateTask/FormCreateTask";
 
 const { Header, Sider, Content } = Layout;
@@ -51,6 +54,9 @@ export default function SideBarJira() {
                 type: OPEN_FORM_CREATE_TASK,
                 Component: <FormCreateTask />,
                 title: "Create task",
+              });
+              dispatch({
+                type: GET_ALL_PROJECT_DROPDOWN_SAGA,
               });
             }}
             key={1}

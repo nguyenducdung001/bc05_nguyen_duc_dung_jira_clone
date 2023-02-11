@@ -12,6 +12,7 @@ import {
   PhoneOutlined,
 } from "@ant-design/icons";
 import { registerAction } from "../redux/action/JiraAction";
+import { NavLink } from "react-router-dom";
 
 function RegisterJira(props) {
   const { values, touched, errors, handleChange, handleBlur, handleSubmit } =
@@ -80,6 +81,10 @@ function RegisterJira(props) {
         >
           Register
         </Button>
+        <div className="mt-2">
+          <span>You had an account!</span>
+          <NavLink to="/login">Login</NavLink>
+        </div>
       </div>
     </form>
   );

@@ -26,6 +26,7 @@ import IndexJira from "./ProjectDetail/IndexJira";
 import DragAndDropDnd from "./Pages/DragAndDropDnD/DragAndDropDnD";
 import UserManagement from "./Pages/UserManagement/UserManagement";
 import RegisterJira from "./RegisterJira/RegisterJira";
+import { USER_LOGIN_SETTING_SYSTEM } from "./util/constants/settingSystem";
 
 // Dùng để phân component
 export const history = createBrowserHistory();
@@ -40,6 +41,12 @@ function App() {
       history: history,
     });
   }, []);
+
+  let dataJson = localStorage.getItem(USER_LOGIN_SETTING_SYSTEM);
+
+  if (dataJson === null) {
+    history.push("/login");
+  }
 
   return (
     //Cấu trúc history phiên bản react-router-dom @5.2.0
@@ -62,7 +69,9 @@ function App() {
           path="/projectManagement"
           Component={ProjectManagement}
         />
+
         <JiraTemplate exact path="/" Component={ProjectManagement} />
+
         <JiraTemplate exact path="/usermanagement" Component={UserManagement} />
         <HomeTemplate exact path="/dragdrop" Component={DragAndDropDnd} />
         <HomeTemplate exact path="*" Component={PageNotFound} />

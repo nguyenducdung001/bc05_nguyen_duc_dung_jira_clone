@@ -28,6 +28,8 @@ function FormCreateTask(props) {
   const { arrStatus } = useSelector((state) => state.StatusReducer);
   // console.log("status", arrStatus);
 
+  const { userLogin } = useSelector((state) => state.UserLoginJiraReducer);
+
   // Do kết nối với withformik => component có các props
   const {
     values,
@@ -91,13 +93,19 @@ function FormCreateTask(props) {
             setFieldValue("projectId", e.target.value);
           }}
         >
-          {arrProject.map((project, index) => {
-            return (
-              <option key={index} value={project.id}>
-                {project.projectName}
-              </option>
-            );
-          })}
+          {/* Lọc project có creator là user đăng nhập */}
+
+          {arrProject
+            ?.filter((mem) => {
+              return mem.creator.id === userLogin.id;
+            })
+            .map((project, index) => {
+              return (
+                <option key={index} value={project.id}>
+                  {project.projectName}
+                </option>
+              );
+            })}
         </select>
       </div>
       <div className="form-group">

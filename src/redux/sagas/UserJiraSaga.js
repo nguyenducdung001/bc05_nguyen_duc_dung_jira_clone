@@ -57,6 +57,7 @@ function* signInSaga(action) {
     history.push("/jira");
   } catch (err) {
     console.log(err.response.data);
+    alert("Incorrect! Please check email and password!");
   }
 
   yield put({

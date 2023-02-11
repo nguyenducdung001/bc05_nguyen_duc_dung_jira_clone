@@ -76,19 +76,7 @@ export default function UserManagement(props) {
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "age",
-    });
-  };
+
   const columns = [
     {
       title: "User ID",
@@ -101,6 +89,7 @@ export default function UserManagement(props) {
       title: "Name",
       dataIndex: "name",
       key: "name",
+
       sorter: (a, b) => {
         let projectName1 = a.projectName.trim().toLowerCase();
         let projectName2 = b.projectName.trim().toLowerCase();
@@ -176,7 +165,7 @@ export default function UserManagement(props) {
         <AutoComplete
           // dropdownMatchSelectWidth={252}
           style={{
-            width: 500,
+            width: "50vw",
           }}
           options={userSearch?.map((user, index) => {
             return { label: user.name, value: user.userId.toString() };
@@ -196,6 +185,11 @@ export default function UserManagement(props) {
             });
           }}
           onSearch={(value) => {
+            if (value.trim() === "") {
+              dispatch({
+                type: GET_LIST_USER_SAGA,
+              });
+            }
             dispatch({
               type: GET_USER_API,
               keyWord: value,

@@ -53,19 +53,7 @@ export default function ProjectManagement(props) {
     setFilteredInfo(filters);
     setSortedInfo(sorter);
   };
-  const clearFilters = () => {
-    setFilteredInfo({});
-  };
-  const clearAll = () => {
-    setFilteredInfo({});
-    setSortedInfo({});
-  };
-  const setAgeSort = () => {
-    setSortedInfo({
-      order: "descend",
-      columnKey: "age",
-    });
-  };
+
   const columns = [
     {
       title: "ID",
@@ -291,11 +279,7 @@ export default function ProjectManagement(props) {
   ];
   return (
     <div className="container-fluid mt-1 h-100 w-100">
-      <Space>
-        <Button onClick={setAgeSort}>Sort age</Button>
-        <Button onClick={clearFilters}>Clear filters</Button>
-        <Button onClick={clearAll}>Clear filters and sorters</Button>
-      </Space>
+      <Space></Space>
       <Table
         columns={columns}
         rowKey={"id"}

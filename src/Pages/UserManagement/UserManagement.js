@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import {
   Button,
   Space,
@@ -61,6 +61,8 @@ export default function UserManagement(props) {
   const { userSearch } = useSelector((state) => state.UserLoginJiraReducer);
 
   const [valueSearch, setValueSearh] = useState("");
+
+  const searchRef = useRef(null);
 
   const dispatch = useDispatch();
 
@@ -185,15 +187,22 @@ export default function UserManagement(props) {
             });
           }}
           onSearch={(value) => {
-            if (value.trim() === "") {
-              dispatch({
-                type: GET_LIST_USER_SAGA,
-              });
+            // debound search
+            if (searchRef.current) {
+              clearTimeout(searchRef.current);
             }
-            dispatch({
-              type: GET_USER_API,
-              keyWord: value,
-            });
+            searchRef.current = setTimeout(() => {
+              if (value.trim() === "") {
+                dispatch({
+                  type: GET_LIST_USER_SAGA,
+                });
+              } else {
+                dispatch({
+                  type: GET_USER_API,
+                  keyWord: value,
+                });
+              }
+            }, 300);
           }}
         >
           <Input.Search size="large" placeholder="" enterButton />

@@ -93,6 +93,7 @@ function FormCreateTask(props) {
             setFieldValue("projectId", e.target.value);
           }}
         >
+          <option>select project:</option>
           {/* Lọc project có creator là user đăng nhập */}
 
           {arrProject
@@ -308,7 +309,8 @@ function FormCreateTask(props) {
 const FormCreateTaskWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
+    const { arrProject, arrTaskType, arrPriority, arrStatus, userLogin } =
+      props;
 
     return {
       taskName: "",
@@ -344,6 +346,7 @@ const mapStateToProps = (state) => {
     arrTaskType: state.TaskTypeReducer.arrTaskType,
     arrPriority: state.PriorityReducer.arrPriority,
     arrStatus: state.StatusReducer.arrStatus,
+    userLogin: state.UserLoginJiraReducer.userLogin,
   };
 };
 

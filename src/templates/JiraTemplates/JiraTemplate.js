@@ -4,7 +4,7 @@ import SideBarJira from "./../../Pages/Home/SideBarJira";
 import MenuJira from "./../../Pages/Home/MenuJira";
 
 import { Desktop, Mobile, Tablet } from "../../HOC/Responsive";
-import MobileSideBar from "../../Pages/Home/MobileSideBar";
+
 import MobileMenu from "../../Pages/Home/MobileMenu";
 import Modal from "../../Pages/Home/Modal";
 

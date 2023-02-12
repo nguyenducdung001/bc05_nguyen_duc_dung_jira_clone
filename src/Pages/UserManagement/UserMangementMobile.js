@@ -29,7 +29,7 @@ import {
 import FormEditUser from "../../components/Forms/FormEditUser/FormEditUser";
 import { Desktop, Mobile } from "../../HOC/Responsive";
 
-export default function UserManagement(props) {
+export default function UserManagementMobile(props) {
   const { userList } = useSelector((state) => state.UserManageReducer);
 
   const { userSearch } = useSelector((state) => state.UserLoginJiraReducer);
@@ -81,17 +81,13 @@ export default function UserManagement(props) {
       dataIndex: "email",
       key: "email",
     },
-    {
-      title: "Phone Number",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
-    },
+
     {
       title: "Action",
 
       key: "action",
       render: (text, record, index) => (
-        <Space size="middle">
+        <Space size="small">
           <Button
             onClick={() => {
               dispatch({
@@ -183,6 +179,8 @@ export default function UserManagement(props) {
         </AutoComplete>
       </Space>
       <Table
+        tableLayout="fixed"
+        size="small"
         columns={columns}
         rowKey={"userId"}
         dataSource={userList}

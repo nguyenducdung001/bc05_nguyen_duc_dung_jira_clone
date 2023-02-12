@@ -1,8 +1,6 @@
 import "./App.css";
 import "./index.css";
 
-import Home from "./Pages/Home/Home";
-
 import PageNotFound from "./Pages/PageNotFound/PageNotFound";
 
 import { createBrowserHistory } from "history";
@@ -27,6 +25,8 @@ import DragAndDropDnd from "./Pages/DragAndDropDnD/DragAndDropDnD";
 import UserManagement from "./Pages/UserManagement/UserManagement";
 import RegisterJira from "./RegisterJira/RegisterJira";
 import { USER_LOGIN_SETTING_SYSTEM } from "./util/constants/settingSystem";
+import ProjectManage from "./Pages/ProjectManagement/ProjectManage";
+import UserManage from "./Pages/UserManagement/UserManage";
 
 // Dùng để phân component
 export const history = createBrowserHistory();
@@ -67,12 +67,12 @@ function App() {
         <JiraTemplate
           exact
           path="/projectManagement"
-          Component={ProjectManagement}
+          Component={ProjectManage}
         />
 
-        <JiraTemplate exact path="/" Component={ProjectManagement} />
+        <JiraTemplate exact path="/" Component={ProjectManage} />
 
-        <JiraTemplate exact path="/usermanagement" Component={UserManagement} />
+        <JiraTemplate exact path="/usermanagement" Component={UserManage} />
         <HomeTemplate exact path="/dragdrop" Component={DragAndDropDnd} />
         <HomeTemplate exact path="*" Component={PageNotFound} />
       </Switch>

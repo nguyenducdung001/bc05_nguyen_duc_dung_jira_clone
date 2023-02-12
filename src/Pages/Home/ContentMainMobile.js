@@ -9,7 +9,7 @@ import {
   UPDATE_STATUS_TASK_SAGA,
 } from "./../../redux/constant/TaskConstants";
 
-export default function ContentMainJira(props) {
+export default function ContentMainMobile(props) {
   const { projectDetail } = props;
 
   const dispatch = useDispatch();
@@ -144,9 +144,7 @@ export default function ContentMainJira(props) {
 
   return (
     <>
-      <div className="content w-100" style={{ display: "flex" }}>
-        {renderLstTast()}
-      </div>
+      <div className="content w-100 mb-2">{renderLstTast()}</div>
     </>
   );
 }

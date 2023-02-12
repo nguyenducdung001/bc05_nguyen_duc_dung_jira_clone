@@ -2,6 +2,7 @@ import React from "react";
 import { Desktop, Mobile, Tablet } from "../../HOC/Responsive";
 import ProjectManagement from "./ProjectManagement";
 import ProjectManagementMobile from "./ProjectManagementMobile";
+import ProjectManagementTablet from "./ProjectManagementTablet";
 
 export default function ProjectManage(props) {
   return (
@@ -11,7 +12,7 @@ export default function ProjectManage(props) {
       </Desktop>
 
       <Tablet>
-        <ProjectManagementMobile />
+        <ProjectManagementTablet />
       </Tablet>
 
       <Mobile>

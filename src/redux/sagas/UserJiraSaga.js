@@ -23,6 +23,7 @@ import {
   GET_USER_BY_PROJECT_ID,
   GET_USER_BY_PROJECT_ID_SAGA,
 } from "../constant/UserConstant";
+import { notiFunction } from "../../util/Notification/NotificationJira";
 
 // Quản lí action saga
 // Login
@@ -57,7 +58,7 @@ function* signInSaga(action) {
     history.push("/jira");
   } catch (err) {
     console.log(err.response.data);
-    alert("Incorrect! Please check email and password!");
+    notiFunction("error", "Incorrect! Please check email and password!");
   }
 
   yield put({
@@ -81,7 +82,7 @@ function* signUpSaga(action) {
 
     if (status == STATUS_CODE.SUCCESS) {
       console.log(data);
-      alert("Register successfully!");
+      notiFunction("success", "Register successfully!");
       history.push("/login");
     }
   } catch (err) {

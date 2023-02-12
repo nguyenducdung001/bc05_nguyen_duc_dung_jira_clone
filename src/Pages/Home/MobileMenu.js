@@ -87,7 +87,7 @@ export default function MobileMenu(props) {
           </li>
           <li className="nav-item dropdown">
             <a
-              className="nav-link dropdown-toggle"
+              className="nav-link dropdown-toggle font-italic"
               href="#"
               id="navbarDropdown"
               role="button"

@@ -28,6 +28,7 @@ import { EDIT_PROJECT } from "../../redux/constant/jiraConstant";
 import Item from "antd/es/list/Item";
 import { NavLink } from "react-router-dom";
 import { Desktop, Mobile } from "../../HOC/Responsive";
+import FormEditProjectMobile from "../../components/Forms/FormEditProject/FormEditProjectMobile";
 
 export default function ProjectManagementMobile(props) {
   // Sử dụng useDispatch để gọi action
@@ -102,6 +103,7 @@ export default function ProjectManagementMobile(props) {
                             <th>ID</th>
                             <th>Avata</th>
                             <th>Name</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -119,7 +121,7 @@ export default function ProjectManagementMobile(props) {
                                 </td>
                                 <td>{member.name}</td>
                                 <td>
-                                  <button
+                                  <span
                                     onClick={() => {
                                       dispatch({
                                         type: REMOVE_USER_PROJECT_API,
@@ -129,11 +131,11 @@ export default function ProjectManagementMobile(props) {
                                         },
                                       });
                                     }}
-                                    style={{ borderRadius: "50%" }}
-                                    className="btn btn-danger"
+                                    style={{ cursor: "pointer" }}
+                                    className="text-danger"
                                   >
                                     X
-                                  </button>
+                                  </span>
                                 </td>
                               </tr>
                             );
@@ -211,7 +213,7 @@ export default function ProjectManagementMobile(props) {
               const action = {
                 type: OPEN_FORM_EDIT_PROJECT,
                 title: "Edit project",
-                Component: <FormEditProject />,
+                Component: <FormEditProjectMobile />,
               };
 
               // dispatch lên reducer nội dung drawer

@@ -133,6 +133,7 @@ export default function ProjectManagement(props) {
                             <th>ID</th>
                             <th>Avata</th>
                             <th>Name</th>
+                            <th>Action</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -150,7 +151,7 @@ export default function ProjectManagement(props) {
                                 </td>
                                 <td>{member.name}</td>
                                 <td>
-                                  <button
+                                  <span
                                     onClick={() => {
                                       dispatch({
                                         type: REMOVE_USER_PROJECT_API,
@@ -160,11 +161,13 @@ export default function ProjectManagement(props) {
                                         },
                                       });
                                     }}
-                                    style={{ borderRadius: "50%" }}
-                                    className="btn btn-danger"
+                                    style={{
+                                      cursor: "pointer",
+                                    }}
+                                    className="text-danger"
                                   >
                                     X
-                                  </button>
+                                  </span>
                                 </td>
                               </tr>
                             );

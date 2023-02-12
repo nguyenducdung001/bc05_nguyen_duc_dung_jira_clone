@@ -28,8 +28,9 @@ import { EDIT_PROJECT } from "../../redux/constant/jiraConstant";
 import Item from "antd/es/list/Item";
 import { NavLink } from "react-router-dom";
 import { Desktop, Mobile } from "../../HOC/Responsive";
+import FormEditProjectMobile from "../../components/Forms/FormEditProject/FormEditProjectMobile";
 
-export default function ProjectManagement(props) {
+export default function ProjectManagementTablet(props) {
   // Sử dụng useDispatch để gọi action
   const dispatch = useDispatch();
 
@@ -81,7 +82,6 @@ export default function ProjectManagement(props) {
         return <NavLink to={`/projectdetail/${record.id}`}>{text}</NavLink>;
       },
     },
-
     {
       title: "Creator",
       // dataIndex: "categoryName",
@@ -99,27 +99,14 @@ export default function ProjectManagement(props) {
         }
       },
     },
-    {
-      title: "Category Name",
-      dataIndex: "categoryName",
-      key: "categoryName",
-      sorter: (a, b) => {
-        let categoryName1 = a.categoryName.trim().toLowerCase();
-        let categoryName2 = b.categoryName.trim().toLowerCase();
-        if (categoryName1 < categoryName2) {
-          return -1;
-        } else {
-          return 1;
-        }
-      },
-    },
+
     {
       title: "Members",
       key: "members",
       render: (text, record, index) => {
         return (
           <div>
-            {record.members?.slice(0, 3).map((member, index) => {
+            {record.members?.slice(0, 1).map((member, index) => {
               return (
                 <Popover
                   key={index}
@@ -161,9 +148,7 @@ export default function ProjectManagement(props) {
                                         },
                                       });
                                     }}
-                                    style={{
-                                      cursor: "pointer",
-                                    }}
+                                    style={{ cursor: "pointer" }}
                                     className="text-danger"
                                   >
                                     X
@@ -181,7 +166,7 @@ export default function ProjectManagement(props) {
                 </Popover>
               );
             })}
-            {record.members?.length > 3 ? <Avatar>...</Avatar> : ""}
+            {record.members?.length > 1 ? <Avatar>...</Avatar> : ""}
             <Popover
               placement="bottom"
               title="Add user"
@@ -239,13 +224,13 @@ export default function ProjectManagement(props) {
       title: "Action",
       key: "action",
       render: (text, record, index) => (
-        <Space size="middle">
+        <Space size="small">
           <Button
             onClick={() => {
               const action = {
                 type: OPEN_FORM_EDIT_PROJECT,
                 title: "Edit project",
-                Component: <FormEditProject />,
+                Component: <FormEditProjectMobile />,
               };
 
               // dispatch lên reducer nội dung drawer
@@ -284,30 +269,17 @@ export default function ProjectManagement(props) {
   ];
   return (
     <>
-      <Desktop>
-        <div className="container-fluid mt-1 h-100 w-100">
-          <Space></Space>
-          <Table
-            columns={columns}
-            rowKey={"id"}
-            dataSource={projectList}
-            onChange={handleChange}
-          />
-        </div>
-      </Desktop>
-      <Mobile>
-        <div className=" mt-1  w-100">
-          <Space></Space>
-          <Table
-            tableLayout="auto"
-            size="small"
-            columns={columns}
-            rowKey={"id"}
-            dataSource={projectList}
-            onChange={handleChange}
-          />
-        </div>
-      </Mobile>
+      <div className=" mt-1  w-100">
+        <Space></Space>
+        <Table
+          tableLayout="auto"
+          size="small"
+          columns={columns}
+          rowKey={"id"}
+          dataSource={projectList}
+          onChange={handleChange}
+        />
+      </div>
     </>
   );
 }

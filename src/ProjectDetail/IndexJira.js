@@ -4,7 +4,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { GET_PROJECT_DETAIL_API } from "../redux/constant/jiraConstant";
 import HeaderMainJira from "../Pages/Home/HeaderMainJira";
 import InforMainJira from "../Pages/Home/InforMainJira";
-import ContentMainJira from "../Pages/Home/ContentMainJira";
+
+import ContentMain from "../Pages/Home/ContentMain";
+import InforMain from "../Pages/Home/InforMain";
 
 export default function IndexJira(props) {
   const { projectDetail } = useSelector((state) => state.ProjectReducer);
@@ -25,9 +27,9 @@ export default function IndexJira(props) {
     <div className="main">
       <HeaderMainJira projectDetail={projectDetail} />
 
-      <InforMainJira projectDetail={projectDetail} />
+      <InforMain projectDetail={projectDetail} />
 
-      <ContentMainJira projectDetail={projectDetail} />
+      <ContentMain projectDetail={projectDetail} />
     </div>
   );
 }

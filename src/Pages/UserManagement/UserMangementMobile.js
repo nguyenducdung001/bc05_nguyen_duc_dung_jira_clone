@@ -27,9 +27,9 @@ import {
   OPEN_FORM_EDIT_USER,
 } from "../../redux/constant/jiraConstant";
 import FormEditUser from "../../components/Forms/FormEditUser/FormEditUser";
-import { Desktop, Mobile } from "../../HOC/Responsive";
+import FormEditUserMobile from "../../components/Forms/FormEditUser/FormEditUserMobile";
 
-export default function UserManagement(props) {
+export default function UserManagementMobile(props) {
   const { userList } = useSelector((state) => state.UserManageReducer);
 
   const { userSearch } = useSelector((state) => state.UserLoginJiraReducer);
@@ -81,22 +81,18 @@ export default function UserManagement(props) {
       dataIndex: "email",
       key: "email",
     },
-    {
-      title: "Phone Number",
-      dataIndex: "phoneNumber",
-      key: "phoneNumber",
-    },
+
     {
       title: "Action",
 
       key: "action",
       render: (text, record, index) => (
-        <Space size="middle">
+        <Space size="small">
           <Button
             onClick={() => {
               dispatch({
                 type: OPEN_FORM_EDIT_USER,
-                Component: <FormEditUser />,
+                Component: <FormEditUserMobile />,
                 title: "Edit user",
               });
 
@@ -179,10 +175,12 @@ export default function UserManagement(props) {
             }, 300);
           }}
         >
-          <Input.Search size="large" placeholder="" enterButton />
+          <Input.Search size="middle" placeholder="" enterButton />
         </AutoComplete>
       </Space>
       <Table
+        tableLayout="fixed"
+        size="small"
         columns={columns}
         rowKey={"userId"}
         dataSource={userList}

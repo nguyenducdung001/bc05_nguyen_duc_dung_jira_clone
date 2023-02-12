@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function InforMainJira(props) {
+export default function InforMainMobile(props) {
   const { projectDetail } = props;
 
   const renderAvatar = () => {
-    return projectDetail.members?.map((item, index) => {
+    return projectDetail.members?.slice(0, 3).map((item, index) => {
       return (
         <div key={index} className="avatar">
           <img src={item.avatar} alt />
@@ -20,18 +20,8 @@ export default function InforMainJira(props) {
         <td dangerouslySetInnerHTML={{ __html: projectDetail.description }} />
       </section>
       <div className="info" style={{ display: "flex" }}>
-        <div className="search-block">
-          <input className="search" />
-          <i className="fa fa-search" />
-        </div>
         <div className="avatar-group" style={{ display: "flex" }}>
           {renderAvatar()}
-        </div>
-        <div style={{ marginLeft: 20 }} className="text">
-          Only My Issues
-        </div>
-        <div style={{ marginLeft: 20 }} className="text">
-          Recently Updated
         </div>
       </div>
     </>

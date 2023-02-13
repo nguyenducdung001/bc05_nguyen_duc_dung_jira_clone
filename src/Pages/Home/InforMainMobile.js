@@ -4,7 +4,7 @@ export default function InforMainMobile(props) {
   const { projectDetail } = props;
 
   const renderAvatar = () => {
-    return projectDetail.members?.slice(0, 3).map((item, index) => {
+    return projectDetail.members?.map((item, index) => {
       return (
         <div key={index} className="avatar">
           <img src={item.avatar} alt />

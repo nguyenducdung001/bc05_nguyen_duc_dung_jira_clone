@@ -116,7 +116,7 @@ export default function ContentMainJira(props) {
                                                   marginLeft: "4px",
                                                 }}
                                                 src={mem.avatar}
-                                                alt
+                                                alt={mem.avatar}
                                               />
                                             </div>
                                           );

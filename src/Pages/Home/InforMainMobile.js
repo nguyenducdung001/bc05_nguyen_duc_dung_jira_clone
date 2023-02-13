@@ -7,7 +7,7 @@ export default function InforMainMobile(props) {
     return projectDetail.members?.map((item, index) => {
       return (
         <div key={index} className="avatar">
-          <img src={item.avatar} alt />
+          <img src={item.avatar} alt={item.avatar} />
         </div>
       );
     });

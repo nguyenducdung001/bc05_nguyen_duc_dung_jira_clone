@@ -11,7 +11,7 @@ export default function MenuJira(props) {
     <div className="menu">
       <div className="account">
         <div className="avatar">
-          <img src={userLogin.avatar} alt />
+          <img src={userLogin.avatar} alt={userLogin.avatar} />
         </div>
         <div className="account-info">
           <p>{userLogin.name}</p>

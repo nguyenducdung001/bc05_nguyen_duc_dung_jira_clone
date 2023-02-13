@@ -55,6 +55,7 @@ function FormEditUser(props) {
           <div className="form-group">
             <p className="font-italic">PassWord</p>
             <input
+              type="password"
               value={values.passWord}
               onChange={handleChange}
               className="form-control"

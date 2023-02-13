@@ -349,7 +349,13 @@ export default function ModalJira(props) {
                           {taskDetailModel.lstComment
                             ?.slice(0, 1)
                             .map((list, index) => {
-                              return <img key={index} src={list.avatar} alt />;
+                              return (
+                                <img
+                                  key={index}
+                                  src={list.avatar}
+                                  alt={list.avatar}
+                                />
+                              );
                             })}
                         </div>
                         <div className="input-comment">
@@ -443,7 +449,7 @@ export default function ModalJira(props) {
                                     <img
                                       style={{ fontSize: "10px" }}
                                       src={list.avatar}
-                                      alt
+                                      alt={list.avatar}
                                     />
                                   </div>
 
@@ -548,7 +554,7 @@ export default function ModalJira(props) {
                                 }}
                               >
                                 <div className="avatar mr-2 ">
-                                  <img src={user.avatar} alt />
+                                  <img src={user.avatar} alt={user.avatar} />
                                 </div>
                                 <div className="name mt-1">
                                   {user.name}

@@ -20,7 +20,7 @@ export default function MobileMenu(props) {
         <div>
           <div className="account">
             <div className="avatar">
-              <img src={userLogin.avatar} alt />
+              <img src={userLogin.avatar} alt={userLogin.avatar} />
             </div>
           </div>
         </div>

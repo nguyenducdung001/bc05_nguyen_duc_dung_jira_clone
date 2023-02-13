@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Editor } from "@tinymce/tinymce-react";
-import { Divider, Select, Slider, Typography } from "antd";
+import { Select, Slider } from "antd";
 import { useSelector, useDispatch, connect } from "react-redux";
 import {
   GET_ALL_PROJECT_DROPDOWN_SAGA,
@@ -10,14 +10,11 @@ import {
 import { GET_ALL_TASK_TYPE_SAGA } from "../../../redux/constant/TaskTypeConstant";
 import { GET_ALL_PRIORITY_SAGA } from "../../../redux/constant/PriorityConstant";
 import { withFormik } from "formik";
-import * as Yup from "yup";
+
 import { CREATE_TASK_SAGA } from "../../../redux/constant/TaskConstants";
-import { select } from "redux-saga/effects";
+
 import { GET_ALL_STATUS_SAGA } from "../../../redux/constant/StatusConstant";
-import {
-  GET_USER_BY_PROJECT_ID,
-  GET_USER_BY_PROJECT_ID_SAGA,
-} from "../../../redux/constant/UserConstant";
+import { GET_USER_BY_PROJECT_ID_SAGA } from "../../../redux/constant/UserConstant";
 
 function FormCreateTask(props) {
   // Lấy dữ liệu từ redux
@@ -309,8 +306,7 @@ function FormCreateTask(props) {
 const FormCreateTaskWithFormik = withFormik({
   enableReinitialize: true,
   mapPropsToValues: (props) => {
-    const { arrProject, arrTaskType, arrPriority, arrStatus, userLogin } =
-      props;
+    const { arrProject, arrTaskType, arrPriority, arrStatus } = props;
 
     return {
       taskName: "",
@@ -325,9 +321,6 @@ const FormCreateTaskWithFormik = withFormik({
       listUserAsign: [],
     };
   },
-
-  // Custom sync validation
-  // SignupSchema: Yup.object().shape({}),
 
   handleSubmit: (values, { props, setSubmitting }) => {
     // Khi người dùng bấm submit thì đưa dữ liệu về backend qua api
@@ -346,7 +339,6 @@ const mapStateToProps = (state) => {
     arrTaskType: state.TaskTypeReducer.arrTaskType,
     arrPriority: state.PriorityReducer.arrPriority,
     arrStatus: state.StatusReducer.arrStatus,
-    userLogin: state.UserLoginJiraReducer.userLogin,
   };
 };
 

@@ -116,7 +116,7 @@ export default function ContentMainMobile(props) {
                                                   marginLeft: "4px",
                                                 }}
                                                 src={mem.avatar}
-                                                alt
+                                                alt={mem.avatar}
                                               />
                                             </div>
                                           );

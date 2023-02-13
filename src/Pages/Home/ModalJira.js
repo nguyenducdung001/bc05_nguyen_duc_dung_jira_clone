@@ -8,23 +8,19 @@ import {
   DELETE_TASK_SAGA,
   HANDLE_CHANGE_POST_API_SAGA,
   REMOVE_USER_ASSIGNESS,
-  UPDATE_STATUS_TASK_SAGA,
 } from "../../redux/constant/TaskConstants";
 import { GET_ALL_TASK_TYPE_SAGA } from "../../redux/constant/TaskTypeConstant";
 import { Editor } from "@tinymce/tinymce-react";
 import { Select, Popconfirm, Button } from "antd";
-import { ToolOutlined } from "@ant-design/icons";
-// import { type } from "os";
+
 import {
   DELETE_COMMENT_SAGA,
   EDIT_COMMENT,
   INSERT_COMMENT_SAGA,
   UPDATE_COMMENT_SAGA,
 } from "../../redux/constant/CommentConstant";
-import { CLOSING } from "ws";
-import { GET_ALL_COMMENT_SAGA } from "./../../redux/constant/CommentConstant";
 
-const { option } = Select;
+import { GET_ALL_COMMENT_SAGA } from "./../../redux/constant/CommentConstant";
 
 export default function ModalJira(props) {
   const { taskDetailModel } = useSelector((state) => state.TaskReducer);
@@ -415,7 +411,9 @@ export default function ModalJira(props) {
                             Create
                           </button>
                           <button
-                            onClick={() => {}}
+                            onClick={() => {
+                              setContentComment("");
+                            }}
                             className="btn btn-outline-secondary m-2 font-weight-light"
                           >
                             Cancle

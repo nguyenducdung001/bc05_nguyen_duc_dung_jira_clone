@@ -394,14 +394,7 @@ export default function ModalMobile(props) {
                         >
                           Create
                         </button>
-                        <button
-                          onClick={() => {
-                            setContentComment("");
-                          }}
-                          className="btn btn-outline-secondary m-2 font-weight-light"
-                        >
-                          Cancle
-                        </button>
+
                         <button
                           onClick={() => {
                             dispatch({

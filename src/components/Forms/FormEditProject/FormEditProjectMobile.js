@@ -95,6 +95,7 @@ function FormEditProjectMobile(props) {
           <Editor
             name="description"
             initialValue={firstValue}
+            value={values.description}
             init={{
               height: 500,
               menubar: false,
